@@ -1,0 +1,30 @@
+{
+  "name": "docman",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^3.17.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0"
+  },
+  "scripts": {
+    "mocha": "mocha --compilers js:babel-core/register",
+    "test": "NODE_ENV=test mocha server/test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-oduyile/Document-Management-System.git"
+  },
+  "author": "Duyile Oluwatomi John",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-oduyile/Document-Management-System/issues"
+  },
+  "homepage": "https://github.com/andela-oduyile/Document-Management-System#readme"
+}

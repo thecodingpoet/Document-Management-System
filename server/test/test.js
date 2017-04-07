@@ -1,9 +1,11 @@
-const assert = require('assert');
+import chai from 'chai';
+import Car from '../func';
+const newCar = new Car('Chevrolet', 2017, 'Corvette Stingray');
 
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal(-1, [1, 2, 3].indexOf(4));
-    });
-  });
+const assert = chai.assert;
+
+describe('Gets full name function', () => {
+  it('Should return the fullName of the car', () => {
+    assert.strictEqual(newCar.getFullName(), '2017 Chevrolet Corvette Stingray');
+  })
 });

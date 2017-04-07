@@ -1,11 +1,11 @@
-import isEven from './func'
+import chai from 'chai';
+import Car from '../func';
+const newCar = new Car('Chevrolet', 2017, 'Corvette Stingray');
 
-const assert = require('assert');
+const assert = chai.assert;
 
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return true for n is equal to 4', function() {
-      assert.equal(true, isEven(4));
-    });
-  });
+describe('Gets full name function', () => {
+  it('Should return the fullName of the car', () => {
+    assert.strictEqual(newCar.getFullName(), '2017 Chevrolet Corvette Stingray');
+  })
 });

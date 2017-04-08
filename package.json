@@ -37,7 +37,7 @@
     "mocha": "mocha --compilers js:babel-core/register",
     "test": "NODE_ENV=test npm run mocha server/test/test.js",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
-    "start": "node server/server.js",
+    "start": "node server.js",
     "cover": "rm -rf coverage/ && NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec server/test"
   },
   "repository": {

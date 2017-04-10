@@ -12,6 +12,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-2": "^6.18.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",
     "dotenv": "^4.0.0",
@@ -31,11 +32,13 @@
     "eslint-plugin-react": "^6.10.0",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.11.0",
     "sequelize-cli": "^2.7.0",
     "should": "^11.2.1"
   },
   "scripts": {
     "mocha": "mocha --compilers js:babel-core/register",
+    "start:dev": "nodemon server.js",
     "test": "NODE_ENV=test npm run mocha server/test/test.js",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
     "start": "node server.js",

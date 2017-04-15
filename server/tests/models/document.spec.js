@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import 'babel-polyfill';
 import database from '../../models';
 import SeedHelper from '../helpers/SeedHelper';
 import SpecHelper from '../helpers/SpecHelper';

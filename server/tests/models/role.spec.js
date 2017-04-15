@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import { expect } from 'chai';
 import database from '../../models';
 import SpecHelper from '../helpers/SpecHelper';

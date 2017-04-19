@@ -38,7 +38,7 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'no action',
       },
-      currentToken: {
+      activeToken: {
         type: Sequelize.TEXT,
         allowNull: true
       },

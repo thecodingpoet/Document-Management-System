@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -11,18 +10,13 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['react']
-        }
+        // query: {
+        //   presets: ['react']
+        // }
       },
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.jsx$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
       },
       {
         test: /\.css$/,
@@ -39,7 +33,7 @@ module.exports = {
     extensions: ['.js']
   },
   output: {
-    path: path.resolve(__dirname + '/client/src/js'),
+    path: path.resolve(__dirname, 'client/src/js'),
     filename: 'bundle.min.js'
   }
 };

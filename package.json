@@ -104,7 +104,7 @@
     "start:dev": "nodemon server.js",
     "test": "NODE_ENV=test npm run migrations && npm run mocha",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
-    "start": "nodemon server.js --exec babel-node ",
+    "start": "webpack -p && babel-node server.js --exec",
     "build": "rimraf dist && webpack --config ./webpack.production.config.js --progress --colors",
     "cover": "rm -rf coverage/ && NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec server/tests/**/*.spec.js"
   },

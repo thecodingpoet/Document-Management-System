@@ -1,1 +1,1 @@
-web: webpack ./node_modules/.bin/babel-node server.js
+"start": "webpack -p && babel-node server.js --exec"

@@ -61,6 +61,7 @@
     "redux-logger": "^2.6.1",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.1.0",
+    "rimraf": "^2.6.1",
     "sass-loader": "^4.0.0",
     "sequelize": "^3.30.4",
     "style-loader": "^0.13.1",
@@ -103,7 +104,8 @@
     "start:dev": "nodemon server.js",
     "test": "NODE_ENV=test npm run migrations && npm run mocha",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
-    "start": "babel-node server.js",
+    "start": "nodemon server.js --exec babel-node ",
+    "build": "rimraf dist && webpack --config ./webpack.production.config.js --progress --colors",
     "cover": "rm -rf coverage/ && NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec server/tests/**/*.spec.js"
   },
   "repository": {

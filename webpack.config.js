@@ -49,10 +49,6 @@ module.exports = {
     contentBase: './client/src',
     hot: true
   },
-  node: {
-    dns: 'mock',
-    net: 'mock'
-  },
   plugins: [
   ]
 };

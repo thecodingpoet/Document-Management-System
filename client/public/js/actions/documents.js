@@ -64,10 +64,8 @@ export function createDoc(doc) {
         authorization: token
       }
     }).then((documents) => {
-      debugger;
       dispatch(newDoc(documents.data.documents));
     }).catch(() => {
-      debugger;
     });
   };
 }

@@ -12,7 +12,7 @@ export default function MyDocumentCard({ doc }) {
       <div className="card grey lighten-3 ">
         <div className="card-content white-text cardz">
           <span className="card-title"><b>{doc.title}</b></span>
-          <p style={{ color: 'black' }}>{doc.content}</p>
+          <p id="content" style={{ color: 'black' }} dangerouslySetInnerHTML={{ __html: doc.content }} />
         </div>
         <div className="card-action right-align">
           <DocMenuIcon />

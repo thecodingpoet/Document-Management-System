@@ -9,9 +9,10 @@ export default function MyDocsList({ docs }) {
     </div>
   );
 
-  const userId = 14;
+  // The user ID is hardconded at the moment. just for testing though
+  const userId = 2;
 
-  const myDocsList = docs.filter(doc => doc.ownerId === userId);
+  const myDocsList = docs.filter(doc => doc.ownerId === 2);
 
   const docsList = (
     <div className="container" id="docList">

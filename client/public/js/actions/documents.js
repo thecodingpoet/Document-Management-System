@@ -44,7 +44,8 @@ export function fetchPublicDocs() {
       headers: {
         authorization: token
       }
-    }).then(documents => dispatch(viewDocs(documents.data.documents)));
+    })
+    .then(documents => dispatch(viewDocs(documents.data.documents)));
   };
 }
 
@@ -62,7 +63,12 @@ export function createDoc(doc) {
       headers: {
         authorization: token
       }
-    }).then(documents => dispatch(newDoc(documents.data.documents)));
+    }).then((documents) => {
+      debugger;
+      dispatch(newDoc(documents.data.documents));
+    }).catch(() => {
+      debugger;
+    });
   };
 }
 

@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import SelectField from 'material-ui/SelectField';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
 import { createDoc } from '../actions/documents';
 import validateInput from '../validations/documents';
+import { fetchPublicDocs } from '../actions/documents';
+
 
 class AddModal extends Component {
 
@@ -18,6 +23,9 @@ class AddModal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.onDropdownChange = this.onDropdownChange.bind(this);
+
+    console.log(this.props);
   }
 
   isValid() {
@@ -30,23 +38,29 @@ class AddModal extends Component {
     return isValid;
   }
 
+  componentDidMount() {
+    $('select').material_select();
+  }
+
   onSubmit(event) {
+    console.log(this.state);
     if (this.isValid()) {
       event.preventDefault();
       this.setState({ errors: {}, isLoading: true });
-      this.props.createDoc(this.state).then((data) => {
-        console.log(data);
-      }).catch((err) => {
-        console.log(err);
+      debugger;
+      this.props.createDoc(this.state)
+      .then(() => {
+        debugger;
+        this.props.fetchPublicDocs();
+        $('#modal1').modal('close');
+        debugger;
       });
     } else {
       event.preventDefault();
-      // this.setState({ errors: error.response.data });
     }
   }
 
   onChange(event) {
-    console.log(event.target.access);
     if (!!this.state.errors[event.target.name]) {
       const errors = Object.assign({}, this.state.errors);
       delete errors[event.target.name];
@@ -59,8 +73,11 @@ class AddModal extends Component {
     }
   }
 
+  onDropdownChange(event, index, value) {
+    this.setState({ access: value });
+  }
+
   handleEditorChange(event) {
-    console.log(!!this.state.errors.content);
     if (!!this.state.errors.content) {
       delete this.state.errors.content;
       this.setState({
@@ -75,7 +92,7 @@ class AddModal extends Component {
   }
 
   render() {
-    const { errors, title, content, access } = this.state;
+    const { errors, title, content } = this.state;
     return (
       <div id="modal1" className="modal">
         <div className="modal-content">
@@ -113,15 +130,18 @@ class AddModal extends Component {
             </div>
             <div className="row">
               <div className="col s12">
-                <label htmlFor="selectArea">Access Level</label>
-                <select
-                  id="selectArea"
-                  onChange={this.onChange}
-                  value={access}
-                >
-                  <option value="public">Public</option>
-                  <option value="private">Private</option>
-                </select>
+                <MuiThemeProvider >
+                  <SelectField
+                    floatingLabelText="Select Access Level"
+                    value={this.state.access}
+                    onChange={this.onDropdownChange}
+                    fullWidth
+                  >
+                    <MenuItem value="public" primaryText="PUBLIC" />
+                    <MenuItem value="private" primaryText="PRIVATE" />
+                    <MenuItem value="role" primaryText="ROLE" />
+                  </SelectField>
+                </MuiThemeProvider >
               </div>
             </div>
             <div className="row">
@@ -144,7 +164,11 @@ class AddModal extends Component {
 }
 
 AddModal.propTypes = {
-  createDoc: React.PropTypes.func.isRequired
+  createDoc: React.PropTypes.func.isRequired,
+  fetchPublicDocs: React.PropTypes.func.isRequired,
 };
+const mapStateToProps = state => ({
+  newDocuments: state.documents,
+});
 
-export default connect(null, { createDoc })(AddModal);
+export default connect(mapStateToProps, { createDoc, fetchPublicDocs })(AddModal);

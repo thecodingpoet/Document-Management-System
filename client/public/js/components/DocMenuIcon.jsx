@@ -4,12 +4,13 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import EditModal from './EditModal.jsx';
 
 /**
  * Simple Icon Menus demonstrating some of the layouts possible using the `anchorOrigin` and
  * `targetOrigin` properties.
  */
-/* const IconsMenu = () => (
+const IconsMenu = () => (
   <div className="cardzIcon">
     <MuiThemeProvider >
       <IconMenu
@@ -18,14 +19,17 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
         targetOrigin={{ horizontal: 'right', vertical: 'top' }}
 
       >
-        <MenuItem primaryText="Edit" href="editDocument" />
+        <a href="/editModal"><MenuItem primaryText="Edit" /></a>
         <MenuItem primaryText="Delete" />
       </IconMenu>
+
     </MuiThemeProvider >
   </div>
-);*/
+);
 
-export default class IconsMenu extends Component {
+export default IconsMenu;
+
+/*export default class IconsMenu extends Component {
   componentDidMount() {
     $('.dropdown-button').dropdown({
       inDuration: 300,
@@ -51,4 +55,4 @@ export default class IconsMenu extends Component {
       </div>
     );
   }
-}
+}*/

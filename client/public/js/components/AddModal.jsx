@@ -47,13 +47,10 @@ class AddModal extends Component {
     if (this.isValid()) {
       event.preventDefault();
       this.setState({ errors: {}, isLoading: true });
-      debugger;
       this.props.createDoc(this.state)
       .then(() => {
-        debugger;
         this.props.fetchPublicDocs();
         $('#modal1').modal('close');
-        debugger;
       });
     } else {
       event.preventDefault();

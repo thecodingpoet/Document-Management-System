@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MyDocsList from './MyDocsList.jsx';
-import { fetchPublicDocs } from '../actions/documents.js';
+import { fetchPublicDocs } from '../actions/documents';
 
 class ViewMyDocuments extends Component {
   componentDidMount() {

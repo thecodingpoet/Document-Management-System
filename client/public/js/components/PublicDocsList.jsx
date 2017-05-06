@@ -6,7 +6,7 @@ export default function PublicDocsList({ docs }) {
     <div className="container">
       <p className="right-align">There are no Public Documents yet</p>
     </div>
-  ); 
+  );
 
   const publicDocsList = docs.filter(doc => doc.access === 'public');
 

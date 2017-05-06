@@ -17,11 +17,11 @@ class MyDocuments extends Component {
       <div className="row">
         <AddModal />
         <EditModal />
-        
+
         <ViewMyDocs />
-        
+
         <AddBtn />
-        
+
       </div>
     );
   }

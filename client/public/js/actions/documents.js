@@ -66,6 +66,7 @@ export function createDoc(doc) {
     }).then((documents) => {
       dispatch(newDoc(documents.data.documents));
     }).catch(() => {
+      return false;
     });
   };
 }

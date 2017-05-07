@@ -17,7 +17,7 @@ class MyDocuments extends Component {
       <div className="row">
         <AddModal />
         <EditModal />
-
+        <EditDocument />
         <ViewMyDocs />
 
         <AddBtn />

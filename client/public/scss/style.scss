@@ -11,6 +11,13 @@
 	width: 100%;
 }
 
+// #iconMenu {
+// 	z-index: 100;
+// }
+// #editModal {
+// 	z-index: 1000;
+// }
+
 .modal {
 	max-height: 85%;
 }
@@ -48,7 +55,7 @@
 #fixedbutton {
     position: fixed;
     bottom: 10px;
-    right: 10px; 
+    right: 10px;
 }
 
 #icon {
@@ -143,8 +150,8 @@
 	margin-top: 50px;
 }
 
-.tabs-content.carousel .carousel-item { 
-	height: 650px; 
+.tabs-content.carousel .carousel-item {
+	height: 650px;
 }
 
 .cardz {

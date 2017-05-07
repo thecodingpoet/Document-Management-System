@@ -58,7 +58,7 @@ class EditDocument extends Component {
   render() {
     const { errors, title, content, access } = this.state;
     return (
-      <div id="editDocument" className="modal">
+      <div id="editDoc" className="modal">
         <div className="modal-content">
          <h5>Edit Document</h5>
           <form onSubmit={this.onSubmit}>

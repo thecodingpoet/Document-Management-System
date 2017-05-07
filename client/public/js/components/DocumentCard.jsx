@@ -1,5 +1,4 @@
 import React from 'react';
-import DocMenuIcon from './DocMenuIcon.jsx';
 
 require('../../scss/style.scss');
 

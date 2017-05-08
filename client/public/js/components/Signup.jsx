@@ -53,7 +53,7 @@ class Signup extends Component {
         window.localStorage.setItem('lastName', response.data.lastName);
         window.localStorage.setItem('email', response.data.email);
         window.localStorage.setItem('token', response.data.token);
-        window.localStorage.setItem('userId', response.data.userID);
+        window.localStorage.setItem('userId', response.data.id);
         this.setState({ shouldRedirect: true });
       }).catch((error) => {
         this.setState({ errors: error.response.data, isLoading: false });

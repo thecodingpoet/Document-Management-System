@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 import app from '../../../server';
-import database from '../../models';
+import db from '../../models';
 import SpecHelper from '../helpers/SpecHelper';
 import SeedHelper from '../helpers/SeedHelper';
 
@@ -14,10 +14,13 @@ describe('Documents:', () => {
   const regularUser3 = SpecHelper.generateRandomUser(2);
   before((done) => {
     // lets get our regular and admin user data after clearing the db
-    SeedHelper.init()
+    SeedHelper.populateRoleTable()
+    .then(() => {
+      db.User.create(adminUser);
+    })
     .then(() => {
       // login admin user
-      client.post('/api/users/login')
+      client.post('/users/login')
       .send({
         email: adminUser.email,
         password: adminUser.password
@@ -27,18 +30,18 @@ describe('Documents:', () => {
         adminUser.token = response.body.token;
         adminUser.id = response.body.id;
         // fetch regularUser1 details
-        client.post('/api/users')
+        client.post('/users')
         .send(regularUser1)
         .end((error1, response1) => {
           regularUser1.token = response1.body.token;
           regularUser1.id = response1.body.id;
           // fetch regularUser2 details
-          client.post('/api/users')
+          client.post('/users')
           .send(regularUser2)
           .end((error2, response2) => {
             regularUser2.token = response2.body.token;
             regularUser2.id = response2.body.id;
-            client.post('/api/users')
+            client.post('/users')
             .send(regularUser3)
             .end((error3, response3) => {
               regularUser3.token = response3.body.token;
@@ -52,7 +55,7 @@ describe('Documents:', () => {
   });
 
   after((done) => {
-    database.sequelize.sync({ force: true })
+    db.sequelize.authenticate({ force: true })
     .then(() => {
       done();
     });
@@ -214,7 +217,7 @@ describe('Documents:', () => {
     it(`should allow a authenticated user fetch only documents of another
     user which he has appropriate access right to`,
     (done) => {
-      client.get(`/api/users/${3}/documents`)
+      client.get(`/users/${3}/documents`)
       .set({ 'x-access-token': regularUser3.token })
       .end((error, response) => {
         expect(response.status).to.equal(200);
@@ -228,7 +231,7 @@ describe('Documents:', () => {
     it(`should allow should return a 404 status when a user tries
     to fetch documents for a specified non-existing user by id`,
     (done) => {
-      client.get(`/api/users/${3000}/documents`)
+      client.get(`/users/${3000}/documents`)
       .set({ 'x-access-token': regularUser3.token })
       .end((error, response) => {
         expect(response.status).to.equal(404);
@@ -239,7 +242,7 @@ describe('Documents:', () => {
     it(`should allow a authenticated Admin user fetch all documents of another
     user regardless of the document access type(public, private, role)`,
     (done) => {
-      client.get(`/api/users/${3}/documents`)
+      client.get(`/users/${3}/documents`)
       .set({ 'x-access-token': adminUser.token })
       .end((error, response) => {
         expect(response.status).to.equal(200);
@@ -255,13 +258,13 @@ describe('Documents:', () => {
     (done) => {
       // lets create a user without any document
       const noDocumentsUser = SpecHelper.generateRandomUser();
-      client.post('/api/users')
+      client.post('/users')
       .send(noDocumentsUser)
       .end((error, response) => {
         noDocumentsUser.id = response.body.id;
         noDocumentsUser.token = response.body.token;
         // check the test now
-        client.get(`/api/users/${noDocumentsUser.id}/documents`)
+        client.get(`/users/${noDocumentsUser.id}/documents`)
         .set({ 'x-access-token': noDocumentsUser.token })
         .end((error1, response1) => {
           expect(response1.status).to.equal(200);
@@ -274,7 +277,7 @@ describe('Documents:', () => {
     it(`should allow a user request for all documents belonging to another
     specific user excluding the user(owner) private documents`,
     (done) => {
-      client.get(`/api/users/${regularUser2.id}/documents`)
+      client.get(`/users/${regularUser2.id}/documents`)
       .set({ 'x-access-token': regularUser1.token })
       .end((error, response) => {
         expect(response.status).to.equal(200);

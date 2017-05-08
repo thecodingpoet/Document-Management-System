@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MyDocsList from './MyDocsList.jsx';
-import { fetchPublicDocs } from '../actions/documents';
+import { fetchPublicDocs} from '../actions/documents';
 
 class ViewMyDocuments extends Component {
   componentDidMount() {
     this.props.fetchPublicDocs();
   }
+  
 
   render() {
     return (
       <div className="row">
         <div id="public" className="col s12">
-          <MyDocsList docs={this.props.docs} />
+          <MyDocsList docs={this.props.docs} testFunc={this.props.testFunc} />
         </div>
       </div>
     );
@@ -21,7 +22,7 @@ class ViewMyDocuments extends Component {
 
 ViewMyDocuments.propTypes = {
   fetchPublicDocs: React.PropTypes.func.isRequired,
-  docs: React.PropTypes.array.isRequired
+  docs: React.PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {

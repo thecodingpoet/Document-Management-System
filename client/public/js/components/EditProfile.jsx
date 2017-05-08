@@ -7,9 +7,9 @@ class EditModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
+      firstName: window.localStorage.firstName ? window.localStorage.firstName : '',
+      lastName: window.localStorage.lastName ? window.localStorage.lastName : '',
+      email: window.localStorage.email ? window.localStorage.email : '',
       password: '',
       errors: '',
       isLoading: false
@@ -42,18 +42,15 @@ class EditModal extends Component {
   }
 
   onSubmit(event) {
-    //console.log('Ateempting to submit...');
-    event.preventDefault();
+    // event.preventDefault();
     if (this.isValid()) {
-      //console.log('this is valid...');
+      const userId = window.localStorage.userId;
       this.setState({ errors: {}, isLoading: true });
-      this.props.editProfile(this.state, 12).then((data) => {
-        console.log('Making an AJAx call....');
-        // Do something
-        // this.setState({ shouldRedirect: true });
-        
-      }).catch((error) => {
-        // this.setState({ errors: error.response.data, isLoading: false });
+      this.props.editProfile(this.state, userId).then((data) => {
+        const user = data.user.data;
+        window.localStorage.setItem('firstName', user.firstName);
+        window.localStorage.setItem('lastName', user.lastName);
+        window.localStorage.setItem('email', user.email);
       });
     }
   }

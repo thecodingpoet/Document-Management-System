@@ -1,5 +1,20 @@
 import axios from 'axios';
 
+export const USER_UPDATED = 'USER_UPDATED';
+
+/**
+ * userUpdated
+ * @export
+ * @param {any} user
+ * @returns {object} object
+ */
+export function userUpdated(user) {
+  return {
+    type: USER_UPDATED,
+    user,
+  };
+}
+
 /**
  * @export
  * @param {Object} userData - An object that contains user data
@@ -13,10 +28,6 @@ export function editProfile(userData, userId) {
       headers: {
         Authorization: token
       }
-    }).then((data) => {
-      console.log(data);
-    }).catch((err) => {
-      console.log(err);
-    });
+    }).then(data => dispatch(userUpdated(data)));
   };
 }

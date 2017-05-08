@@ -207,7 +207,7 @@ class UserController {
       })
       .then((user) => {
         if (user) {
-          if (!user.verifyPassword(request.body.password)) {
+          if (user.verifyPassword(request.body.password)) {
             const token = Authenticator.generateToken(user);
             // update user activeToken
             user.update({ activeToken: token })

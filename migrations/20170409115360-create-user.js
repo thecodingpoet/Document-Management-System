@@ -29,14 +29,14 @@ module.exports = {
       },
       roleId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         default: 2,
+        allowNull: false,
         references: {
           model: 'Role',
           key: 'id'
         },
         onUpdate: 'cascade',
-        onDelete: 'no action',
+        onDelete: 'no action'
       },
       activeToken: {
         type: Sequelize.TEXT,

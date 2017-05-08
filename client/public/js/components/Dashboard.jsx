@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AddModal from './AddModal.jsx';
-import EditModal from './EditModal.jsx';
+import EditProfile from './EditProfile.jsx';
 import AddBtn from './AddButton.jsx';
 import ViewDocs from './ViewDocuments.jsx';
 
@@ -17,7 +17,7 @@ class Dashboard extends Component {
     return (
       <div className="row">
         <AddModal />
-        <EditModal />
+        <EditProfile />
 
         <ViewDocs />
 

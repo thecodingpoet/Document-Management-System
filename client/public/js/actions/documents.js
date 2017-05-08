@@ -2,7 +2,16 @@ import axios from 'axios';
 
 export const SET_DOCUMENTS = 'SET_DOCUMENTS';
 export const CREATE_DOCUMENTS = 'CREATE_DOCUMENTS';
+export const EDIT_DOCUMENT_SUCCESS = 'EDIT_DOCUMENT_SUCCESS';
+export const SET_CURRENT_DOCUMENT = 'SET_CURRENT_DOCUMENT';
+export const DELETE_DOCUMENT_SUCCESS = 'DELETE_DOCUMENT_SUCCESS';
 
+export function setCurrentDocument(document) {
+  return {
+    type: SET_CURRENT_DOCUMENT,
+    document
+  };
+}
 /**
  * This method dispatches the view documents action
  * @export
@@ -28,6 +37,31 @@ export function newDoc(documents) {
   return {
     type: CREATE_DOCUMENTS,
     documents
+  };
+}
+
+/**
+ * This method dispatches the edit document action
+ * @export
+ * @param {any} document - Document to edit
+ * @returns {}
+ */
+export function editDocSuccess(document) {
+  return {
+    type: EDIT_DOCUMENT_SUCCESS,
+    document
+  };
+}
+
+/**
+ * This method dispatches the delete document action
+ * @export
+ * @returns 
+ */
+export function documentDeleted(documentId) {
+  return {
+    type: DELETE_DOCUMENT_SUCCESS,
+    documentId
   };
 }
 
@@ -80,13 +114,18 @@ export function createDoc(doc) {
  * of the document and the action
  */
 export function editDoc(doc, docId) {
+  debugger;
   return (dispatch) => {
+    debugger;
     const token = window.localStorage.getItem('token');
-    return axios.post(`/api/documents/${docId}`, doc, {
+    return axios.put(`/documents/${docId}`, doc, {
       headers: {
         authorization: token
       }
-    }).then(documents => dispatch(editDoc(documents.data.documents)))
+    }).then(documents => {
+      debugger;
+      dispatch(editDocSuccess(documents.data.documents));
+    })
     .catch(() => {
       // An error occurred.....
     });
@@ -103,11 +142,11 @@ export function editDoc(doc, docId) {
 export function deleteDoc(docId) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token');
-    return axios.delete(`/api/documents/${docId}`, {
+    return axios.delete(`/documents/${docId}`, {
       headers: {
         authorization: token
       }
-    }).then(documents => dispatch(deleteDoc(documents.data.documents)))
+    }).then(documents => dispatch(documentDeleted(docId)))
     .catch((err) => {
       // An error occurred.....
     });

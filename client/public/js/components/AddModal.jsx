@@ -85,7 +85,6 @@ class AddModal extends Component {
         content: event.target.getContent()
       });
     }
-
   }
 
   render() {

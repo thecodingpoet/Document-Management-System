@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import SelectField from 'material-ui/SelectField';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
-import validateInput from '../validations/signup';
 import { editDoc } from '../actions/documents';
+import { fetchPublicDocs } from '../actions/documents';
 
 class EditDocument extends Component {
 
@@ -16,16 +19,23 @@ class EditDocument extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.onDropdownChange = this.onDropdownChange.bind(this);
   }
 
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if (!isValid) {
-      this.setState({ errors });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps, nextProps.testDoc.hasOwnProperty('access')) {
+        this.setState({
+          title: nextProps.testDoc.title,
+          content: nextProps.testDoc.content,
+          access: nextProps.testDoc.access,
+        });
+        tinymce.activeEditor.setContent(nextProps.testDoc.content)
     }
+  }
 
-    return isValid;
+  componentDidMount() {
+    $('select').material_select();
   }
 
   onChange(event) {
@@ -41,27 +51,40 @@ class EditDocument extends Component {
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.editDoc(this.state).then((data) => {
-        console.log(data);
-        // Do something
-        // this.setState({ shouldRedirect: true });
-      }).catch((error) => {
-        // this.setState({ errors: error.response.data, isLoading: false });
+  onSubmit(event) {
+    event.preventDefault();
+    this.setState({ errors: {}, isLoading: true });
+    this.props.editDoc(this.state, this.props.testDoc.id, 'DocumentId')
+    .then(() => {
+      this.props.fetchPublicDocs();
+      $('#editDoc').modal('close');
+    });
+  }
+
+  onDropdownChange(event, index, value) {
+    this.setState({ access: value });
+  }
+
+  handleEditorChange(event) {
+    if (this.state.errors.content) {
+      delete this.state.errors.content;
+      this.setState({
+        content: event.target.getContent()
+      });
+    } else {
+      this.setState({
+        content: event.target.getContent()
       });
     }
   }
 
   render() {
-    const { errors, title, content, access } = this.state;
+    const { errors, title, content } = this.state;
     return (
       <div id="editDoc" className="modal">
         <div className="modal-content">
-         <h5>Edit Document</h5>
-          <form onSubmit={this.onSubmit}>
+          <h5>Edit Document</h5>
+          <form >
             <div className="row">
               <div className="input-field col s12">
                 <input
@@ -94,15 +117,18 @@ class EditDocument extends Component {
             </div>
             <div className="row">
               <div className="col s12">
-                <label htmlFor="selectArea">Access Level</label>
-                <select
-                  id="selectArea"
-                  onChange={this.onChange}
-                  value={access}
-                >
-                  <option value="public">Public</option>
-                  <option value="private">Private</option>
-                </select>
+                <MuiThemeProvider >
+                  <SelectField
+                    floatingLabelText="Select Access Level"
+                    value={this.state.access}
+                    onChange={this.onDropdownChange}
+                    fullWidth
+                  >
+                    <MenuItem value="public" primaryText="PUBLIC" />
+                    <MenuItem value="private" primaryText="PRIVATE" />
+                    <MenuItem value="role" primaryText="ROLE" />
+                  </SelectField>
+                </MuiThemeProvider >
               </div>
             </div>
             <div className="row">
@@ -114,6 +140,7 @@ class EditDocument extends Component {
                   type="submit"
                   className="modal-action waves-effect waves-green btn-flat"
                   value="Submit"
+                  onClick={this.onSubmit}
                 />
               </div>
             </div>
@@ -128,4 +155,8 @@ EditDocument.propTypes = {
   editDoc: React.PropTypes.func.isRequired
 };
 
-export default connect(null, { editDoc })(EditDocument);
+function mapStateToProps(state) {
+  return { document: state.documents };
+}
+
+export default connect(mapStateToProps, { editDoc, fetchPublicDocs })(EditDocument);

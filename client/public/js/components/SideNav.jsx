@@ -75,7 +75,7 @@ export default class MySideNav extends Component {
             <span className="white-text name">{this.name}</span>
             <span className="white-text email">{this.email}</span>
           </div></li>
-        <li><Link to="dashboard" className="waves-effect" href="#!"><i className="material-icons">view_agenda</i>Dashboard</Link></li>
+        <li><Link to="dashboard" className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
           <li><Link to="document" className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
           <li><a className="waves-effect" href="#!"> <i className="material-icons">search</i>Search Documents</a></li>
           <li><a className="waves-effect" href="#editModal"><i className="material-icons">mode_edit</i>Edit Profile</a></li>

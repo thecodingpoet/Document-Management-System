@@ -67,11 +67,9 @@ class Signup extends Component {
       this.state.shouldRedirect ?
         <Redirect to={'/dashboard'} /> :
         <div className="container row divBox" id="signUpBox" >
-          {/*<h3>Sign Up</h3>*/}
           <form action="" onSubmit={this.onSubmit} className="col s12">
             <div className="row">
               <div className="input-field offset-s3 col s6">
-                <i className="material-icons prefix">account_circle</i>
                 <input
                   id="firstName"
                   type="text"
@@ -87,7 +85,6 @@ class Signup extends Component {
             </div>
             <div className="row">
               <div className="input-field offset-s3 col s6">
-                <i className="material-icons prefix">account_circle</i>
                 <input
                   id="lastName"
                   type="text"
@@ -103,7 +100,6 @@ class Signup extends Component {
             </div>
             <div className="row">
               <div className="input-field offset-s3 col s6">
-                <i className="material-icons prefix">email</i>
                 <input
                   id="email"
                   type="email"
@@ -119,7 +115,6 @@ class Signup extends Component {
             </div>
             <div className="row">
               <div className="input-field offset-s3 col s6">
-                <i className="material-icons prefix">lock</i>
                 <input
                   id="password"
                   type="password"

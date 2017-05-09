@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Avatar from 'react-avatar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { logout } from '../actions/logout';
 
 require('../../scss/style.scss');
 
 injectTapEventPlugin();
 
-export default class MySideNav extends Component {
+class MySideNav extends Component {
 
   constructor(props) {
     super(props);
@@ -25,6 +22,7 @@ export default class MySideNav extends Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.search = this.search.bind(this);
+    this.logout = this.logout.bind(this);
     const firstName = window.localStorage.getItem('firstName');
     const lastName = window.localStorage.getItem('lastName');
     this.name = `${firstName}  ${lastName}`;
@@ -53,9 +51,14 @@ export default class MySideNav extends Component {
     );
   }
 
+  logout(event) {
+    event.preventDefault();
+    this.props.logout();
+    this.setState({ redirectTo: '/' });
+  }
+
   search(event) {
     if (event.key === 'Enter') {
-      console.log('Attempting to redirect');
       this.setState({ fireRedirect: true });
     }
   }
@@ -77,7 +80,7 @@ export default class MySideNav extends Component {
             <ul className="right hide-on-med-and-down">
               <li>
                 <div className="center row">
-                    <div className="col s12 " >
+                  <div className="col s12 " >
                       <div className="row" id="topbarsearch">
                         <div className="red-text input-field col s6 s12 ">
                           <i className="white material-icons prefix" id="searchIcon">search</i>
@@ -85,9 +88,9 @@ export default class MySideNav extends Component {
                         </div>
                       </div>
                     </div>
-                  </div>
+                </div>
               </li>
-              <li><Link to="/logout">logout</Link></li>
+              <li onClick={this.logout}><Link to="/">logout</Link></li>
             </ul>
           </div>
         </nav>
@@ -116,3 +119,9 @@ export default class MySideNav extends Component {
     );
   }
 }
+
+MySideNav.propTypes = {
+  logout: React.PropTypes.func.isRequired
+};
+
+export default connect(null, { logout })(MySideNav);

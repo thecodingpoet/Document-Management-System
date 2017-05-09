@@ -69,10 +69,8 @@ class Login extends Component {
         <div>
           <form onSubmit={this.onSubmit}>
             <div className="container divBox" id="loginBox">
-              {/* <h3>Log In</h3>*/}
               <div className="row">
                 <div className="input-field offset-s3 col s6">
-                  <i className="material-icons prefix">email</i>
                   <input
                     id="email"
                     type="email"
@@ -88,7 +86,6 @@ class Login extends Component {
               </div>
               <div className="row">
                 <div className="input-field offset-s3 col s6">
-                  <i className="material-icons prefix">lock</i>
                   <input
                     id="password"
                     type="password"

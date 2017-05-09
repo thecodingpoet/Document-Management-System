@@ -24,8 +24,6 @@ class AddModal extends Component {
     this.onChange = this.onChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.onDropdownChange = this.onDropdownChange.bind(this);
-
-    console.log(this.props);
   }
 
   isValid() {

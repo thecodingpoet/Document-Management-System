@@ -12,7 +12,7 @@ class ViewMyDocuments extends Component {
   render() {
     return (
       <div className="row">
-        <div id="public" className="col s12">
+        <div id="public" className="col s12 spaces">
           <MyDocsList docs={this.props.docs} testFunc={this.props.testFunc} />
         </div>
       </div>

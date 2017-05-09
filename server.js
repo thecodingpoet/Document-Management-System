@@ -40,12 +40,12 @@ app.get('/swagger.json', (req, res) => {
 app.use('/', route.userRouter);
 app.use('/', route.rolesRouter);
 app.use('/', route.documentRouter);
-// app.get('/doc', (req, res) => {
-//   res.status(200)
-//   .sendFile(path.join(__dirname, 'server/swagger', 'index.html'));
-// });
+app.get('/doc', (req, res) => {
+  res.status(200)
+  .sendFile(path.join(__dirname, 'server/swagger', 'index.html'));
+});
 
-// app.use(express.static(path.join(__dirname, 'server/Swagger')));
+app.use(express.static(path.join(__dirname, 'server/Swagger')));
 
 app.all('*', (req, res) => {
   res.sendFile(`${__dirname}/client/src/index.html`);

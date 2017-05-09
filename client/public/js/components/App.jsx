@@ -8,6 +8,7 @@ import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
 import Nav from './Nav.jsx';
 import MyDocuments from './MyDocuments.jsx';
+import Search from './Search.jsx';
 
 require('../../scss/style.scss');
 
@@ -22,6 +23,7 @@ export default class App extends Component {
               <Route exact path="/" component={Home} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/document" component={MyDocuments} />
+              <Route path="/search" component={Search} />
             </Switch>
           </div>
           <Footer />

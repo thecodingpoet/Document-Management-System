@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Avatar from 'react-avatar';
 import Drawer from 'material-ui/Drawer';
@@ -16,10 +17,14 @@ export default class MySideNav extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = {
+      open: false,
+      fireRedirect: false
+    };
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.search = this.search.bind(this);
     const firstName = window.localStorage.getItem('firstName');
     const lastName = window.localStorage.getItem('lastName');
     this.name = `${firstName}  ${lastName}`;
@@ -38,13 +43,25 @@ export default class MySideNav extends Component {
     this.setState({ open: false });
   }
 
+  closeSideNav() {
+    $('.button-collapse').sideNav('hide');
+  }
+
   openModal() {
     return (
       <p> Hello there </p>
     );
   }
 
+  search(event) {
+    if (event.key === 'Enter') {
+      console.log('Attempting to redirect');
+      this.setState({ fireRedirect: true });
+    }
+  }
+
   render() {
+    const { fireRedirect } = this.state;
     return (
       <div>
         <nav>
@@ -58,11 +75,26 @@ export default class MySideNav extends Component {
             </span>
 
             <ul className="right hide-on-med-and-down">
-              <li><Link to="/signup"><i className="large material-icons" /></Link></li>
-              <li><Link to="/login">logout</Link></li>
+              <li>
+                <div className="center row">
+                    <div className="col s12 " >
+                      <div className="row" id="topbarsearch">
+                        <div className="red-text input-field col s6 s12 ">
+                          <i className="white material-icons prefix" id="searchIcon">search</i>
+                          <input type="text" placeholder="search" id="autocomplete-input" className="autocomplete" onKeyPress={this.search} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </li>
+              <li><Link to="/logout">logout</Link></li>
             </ul>
           </div>
         </nav>
+
+        {fireRedirect && (
+          <Redirect exactly to={'/search'} />
+        )}
 
         <ul id="slide-out" className="side-nav">
           <li><div className="userView">
@@ -75,10 +107,9 @@ export default class MySideNav extends Component {
             <span className="white-text name">{this.name}</span>
             <span className="white-text email">{this.email}</span>
           </div></li>
-        <li><Link to="dashboard" className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
-          <li><Link to="document" className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
-          <li><a className="waves-effect" href="#!"> <i className="material-icons">search</i>Search Documents</a></li>
-          <li><a className="waves-effect" href="#editModal"><i className="material-icons">mode_edit</i>Edit Profile</a></li>
+          <li><Link to="dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
+          <li><Link to="document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
+          <li><a className="waves-effect" onClick={this.closeSideNav} href="#editModal"><i className="material-icons">mode_edit</i>Edit Profile</a></li>
         </ul>
       </div>
 

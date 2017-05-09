@@ -28,9 +28,9 @@ class EditDocument extends Component {
         this.setState({
           title: nextProps.testDoc.title,
           content: nextProps.testDoc.content,
-          access: nextProps.testDoc.access,
+          access: nextProps.testDoc.access
         });
-        tinymce.activeEditor.setContent(nextProps.testDoc.content)
+        tinymce.activeEditor.setContent(nextProps.testDoc.content);
     }
   }
 

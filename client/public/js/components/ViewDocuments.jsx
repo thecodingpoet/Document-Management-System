@@ -7,7 +7,7 @@ export default class ViewDocuments extends Component {
   render() {
     return (
       <div className="row">
-        <div className="col s12">
+        <div className="col s12 space">
           <ul id="tabs-swipe-demo" className="tabs">
             <li className="tab col s3"><a className="active" href="#public">Public</a></li>
             <li className="tab col s3"><a href="#private">Private</a></li>
@@ -19,7 +19,6 @@ export default class ViewDocuments extends Component {
         <div id="private" className="col s12"><PrivateDocs /></div>
         <div id="role" className="col s12"><RoleDocs /></div>
       </div>
-
     );
   }
 }

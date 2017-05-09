@@ -145,6 +145,34 @@ class DocumentController {
     });
   }
 
+
+    /**
+     * Controller method to search for a document
+     * @static
+     * @param {any} request - Request Object
+     * @param {any} response - Response Object
+     * @return{Void} - returns void
+     * @memberOf DocumentController
+     */
+  static findDoc(request, response) {
+    if (request.query.q) {
+      documentDb.find({ where: { title: request.query.q } })
+       .then((foundDoc) => {
+         if (foundDoc) {
+           return ResponseHandler.sendResponse(
+             response,
+             302,
+             DocumentController.formatDocument(foundDoc)
+            );
+         }
+       }).catch(err => ResponseHandler.sendResponse(
+        response,
+        404,
+        { status: false, message: err }
+      ));
+    }
+  }
+
   /**
    * Controller method to fetch all documents
    * @param{Object} request - Request Object

@@ -310,6 +310,33 @@ class UserController {
       }
     });
   }
+
+  /**
+   * Controller method to search for a user
+   * @static
+   * @param {any} request - Request Object
+   * @param {any} response - Response Object
+   * @return{Void} - returns void
+   * @memberOf UserController
+   */
+  static findUser(request, response) {
+    if (request.query.q) {
+      userDB.User.find({ where: { email: { $like: request.query.q } } })
+       .then((foundUser) => {
+         if (foundUser) {
+           return ResponseHandler.sendResponse(
+             response,
+             302,
+             UserController.formatUserDetails(foundUser)
+            );
+         }
+       }).catch(err => ResponseHandler.sendResponse(
+           response,
+           404,
+           { status: false, message: err }
+         ));
+    }
+  }
 }
 
 export default UserController;

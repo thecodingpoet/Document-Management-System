@@ -11,12 +11,32 @@
 	width: 100%;
 }
 
-// #iconMenu {
-// 	z-index: 100;
-// }
-// #editModal {
-// 	z-index: 1000;
-// }
+#topbarsearch .input-field .prefix { 
+	width:0rem !important;    
+}
+
+#topbarsearch nav ul li:hover, nav ul li.active {
+	background-color: none !important;
+}
+.input-field .prefix ~ input, .input-field .prefix ~ textarea, .input-field .prefix ~ label, .input-field .prefix ~ .validate ~ label, .input-field .prefix ~ .autocomplete-content{
+	margin-left: 1rem !important;
+}
+
+.space {
+	margin-top: -30px;
+}
+
+#searchIcon {
+	color: white;
+}
+
+.spaces {
+	margin-top: -50px;
+}
+
+#autocomplete-input {
+	color: white;
+}
 
 .modal {
 	max-height: 85%;

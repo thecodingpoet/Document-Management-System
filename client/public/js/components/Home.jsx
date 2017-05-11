@@ -5,7 +5,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <img src={require('../../images/Banner3.jpg')}  alt=" landing page banner" id="banner" />
+        <img src={require('../../images/Banner3.jpg')} alt=" landing page banner" id="banner" />
         <About />
       </div>
 

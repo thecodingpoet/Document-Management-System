@@ -16,7 +16,7 @@ class DocumentController {
    * @return {Object} - new User object containing fields
    * consider safe for public view
    */
-  static getSafeDocumentFields(document) {
+  static getDocumentFields(document) {
     return {
       id: document.id,
       title: document.title,
@@ -26,6 +26,7 @@ class DocumentController {
       createdAt: document.createdAt
     };
   }
+
   /**
    * Controller method create a new Document
    * @param{Object} request - Request Object
@@ -45,7 +46,7 @@ class DocumentController {
       ResponseHandler.sendResponse(
         response,
         201,
-        DocumentController.getSafeDocumentFields(createdDocument)
+        DocumentController.getDocumentFields(createdDocument)
       );
     })
     .catch((error) => {
@@ -106,7 +107,6 @@ class DocumentController {
     })
     .then((document) => {
       if (document) {
-        // lets chceck required access
         if (
           (document.access === 'public'
           || (requesterRoleId === document.ownerRoleId))
@@ -114,7 +114,7 @@ class DocumentController {
           ResponseHandler.sendResponse(
             response,
             200,
-            DocumentController.getSafeDocumentFields(document)
+            DocumentController.getDocumentFields(document)
           );
         } else if (
           document.ownerId === requesterId ||
@@ -123,7 +123,7 @@ class DocumentController {
           ResponseHandler.sendResponse(
             response,
             200,
-            DocumentController.getSafeDocumentFields(document)
+            DocumentController.getDocumentFields(document)
           );
         } else {
           ResponseHandler.send403(

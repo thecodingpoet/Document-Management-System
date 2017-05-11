@@ -41,7 +41,6 @@ class AddModal extends Component {
   }
 
   onSubmit(event) {
-    console.log(this.state);
     if (this.isValid()) {
       event.preventDefault();
       this.setState({ errors: {}, isLoading: true });

@@ -5,13 +5,8 @@ import DocumentCard from './DocumentCard.jsx';
 class Search extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.docs);
-    console.log(event.target.value);
-
     const searchDocs = this.searchDocuments(this.props.docs, event.target.value);
     const fetchDocs = this.findMatchingDocs(searchDocs);
-    console.log(searchDocs, 'Filter Function');
-    console.log(fetchDocs, 'Fetching Documents');
   }
 
   searchDocuments(document, searchTerm) {
@@ -53,5 +48,9 @@ function mapStateToProps(state) {
     docs: state.documents
   };
 }
+
+Search.propTypes = {
+  docs: React.PropTypes.array.isRequired
+};
 
 export default connect(mapStateToProps, null)(Search);

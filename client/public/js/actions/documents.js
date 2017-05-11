@@ -114,16 +114,13 @@ export function createDoc(doc) {
  * of the document and the action
  */
 export function editDoc(doc, docId) {
-  debugger;
   return (dispatch) => {
-    debugger;
     const token = window.localStorage.getItem('token');
     return axios.put(`/documents/${docId}`, doc, {
       headers: {
         authorization: token
       }
     }).then(documents => {
-      debugger;
       dispatch(editDocSuccess(documents.data.documents));
     })
     .catch(() => {

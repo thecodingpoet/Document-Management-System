@@ -8,7 +8,7 @@ const userDb = database.User;
 /**
  * Class to implement authentication middlewares
  */
-class Authenticator {
+class Auth {
 
   /**
    * Method to get token from a request object
@@ -57,9 +57,9 @@ class Authenticator {
    * @return {undefined} - Returns undefined
    */
   static authenticateUser(request, response, next) {
-    const token = Authenticator.getTokenInRequest(request);
+    const token = Auth.getTokenInRequest(request);
     if (token) {
-      const decoded = Authenticator.verifyToken(token);
+      const decoded = Auth.verifyToken(token);
       if (decoded) {
         userDb.findById(decoded.userId, {
           attributes: ['activeToken', 'roleId']
@@ -114,4 +114,4 @@ class Authenticator {
   }
 }
 
-export default Authenticator;
+export default Auth;

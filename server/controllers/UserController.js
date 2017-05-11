@@ -19,7 +19,7 @@ class UserController {
    * @return {Object} - new User object containing fields
    * consider safe for public view
    */
-  static getSafeUserFields(user, token) {
+  static getUserFields(user, token) {
     return {
       id: user.id,
       email: user.email,
@@ -49,7 +49,7 @@ class UserController {
           201,
           Object.assign(
             {},
-            UserController.getSafeUserFields(user, token),
+            UserController.getUserFields(user, token),
             { roleId: user.roleId }
           )
         );
@@ -100,7 +100,7 @@ class UserController {
           ResponseHandler.sendResponse(
             response,
             200,
-            UserController.getSafeUserFields(updatedUser)
+            UserController.getUserFields(updatedUser)
           );
         })
         .catch((error) => {
@@ -126,7 +126,7 @@ class UserController {
         ResponseHandler.sendResponse(
           response,
           200,
-          UserController.getSafeUserFields(user)
+          UserController.getUserFields(user)
         );
       } else {
         ResponseHandler.send404(response);
@@ -182,7 +182,7 @@ class UserController {
           200,
           {
             users: users.rows
-              .map(user => UserController.getSafeUserFields(user)),
+              .map(user => UserController.getUserFields(user)),
             total: users.count
           }
         );
@@ -298,7 +298,7 @@ class UserController {
         });
         const safeUser = Object.assign(
           {},
-          UserController.getSafeUserFields(user),
+          UserController.getUserFields(user),
           { documents });
         ResponseHandler.sendResponse(
           response,

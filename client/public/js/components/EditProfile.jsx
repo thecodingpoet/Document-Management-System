@@ -42,7 +42,7 @@ class EditModal extends Component {
   }
 
   onSubmit(event) {
-    // event.preventDefault();
+    event.preventDefault();
     if (this.isValid()) {
       const userId = window.localStorage.userId;
       this.setState({ errors: {}, isLoading: true });

@@ -25,6 +25,7 @@ class MySideNav extends Component {
     this.logout = this.logout.bind(this);
     const firstName = window.localStorage.getItem('firstName');
     const lastName = window.localStorage.getItem('lastName');
+    this.roleId = window.localStorage.getItem('roleId');
     this.name = `${firstName}  ${lastName}`;
     this.email = window.localStorage.getItem('email');
   }
@@ -65,6 +66,7 @@ class MySideNav extends Component {
 
   render() {
     const { fireRedirect } = this.state;
+    const roleId = window.localStorage.getItem('roleId');
     return (
       <div>
         <nav>
@@ -112,6 +114,10 @@ class MySideNav extends Component {
           </div></li>
           <li><Link to="dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
           <li><Link to="document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
+          { Number(roleId) === 1
+            ? <li><a className="waves-effect" onClick={this.closeSideNav} href="#editModal"><i className="material-icons">supervisor_account</i>Manage User</a></li>
+            : ''
+          }
           <li><a className="waves-effect" onClick={this.closeSideNav} href="#editModal"><i className="material-icons">mode_edit</i>Edit Profile</a></li>
         </ul>
       </div>

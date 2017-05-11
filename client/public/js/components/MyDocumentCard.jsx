@@ -19,18 +19,16 @@ class MyDocumentCard extends React.Component {
     this.state = {
       showComponent: false,
     };
-    console.log(this.props.actions.deleteDoc);
-  }
-
-  buttonclick(id) {
-    this.props.testFunc(this.props.doc);
-    // this.props.actions.setCurrentDocument(this.props.doc);
   }
 
   onClick() {
     this.setState({
       showComponent: true,
     });
+  }
+
+  buttonclick(id) {
+    this.props.testFunc(this.props.doc);
   }
   
   render() {
@@ -69,6 +67,7 @@ class MyDocumentCard extends React.Component {
 MyDocumentCard.propTypes = {
   doc: React.PropTypes.object.isRequired,
   actions: React.PropTypes.func.isRequired,
+  testFunc: React.PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => {

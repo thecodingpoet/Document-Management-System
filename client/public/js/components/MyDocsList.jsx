@@ -15,7 +15,7 @@ export default function MyDocsList({ docs, editDoc, testFunc }) {
   const docsList = (
     <div className="container" id="docList">
       <div className="row">
-        { myDocsList.map(doc => <MyDocumentCard doc={doc} key={doc.id} editDoc={editDoc} testFunc={testFunc}/>) }
+        { myDocsList.map(doc => <MyDocumentCard doc={doc} key={doc.id} editDoc={editDoc} testFunc={testFunc} />) }
       </div>
     </div>
   );

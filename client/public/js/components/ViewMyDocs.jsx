@@ -7,7 +7,6 @@ class ViewMyDocuments extends Component {
   componentDidMount() {
     this.props.fetchPublicDocs();
   }
-  
 
   render() {
     return (

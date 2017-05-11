@@ -27,6 +27,7 @@ export function logout() {
     localStorage.removeItem('lastName');
     localStorage.removeItem('email');
     localStorage.removeItem('userId');
+    localStorage.removeItem('roleId');
     dispatch(setCurrentUser({}));
   };
 }

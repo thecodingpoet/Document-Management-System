@@ -29,8 +29,8 @@ class Login extends Component {
     return isValid;
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.login(this.state).then(
@@ -40,6 +40,7 @@ class Login extends Component {
           window.localStorage.setItem('email', response.data.email);
           window.localStorage.setItem('token', response.data.token);
           window.localStorage.setItem('userId', response.data.id);
+          window.localStorage.setItem('roleId', response.data.roleId);
           this.setState({ shouldRedirect: true });
         }
       ).catch((error) => {

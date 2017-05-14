@@ -32,7 +32,7 @@ module.exports = {
         default: 2,
         allowNull: false,
         references: {
-          model: 'Role',
+          model: 'Roles',
           key: 'id'
         },
         onUpdate: 'cascade',

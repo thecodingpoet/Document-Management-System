@@ -9,7 +9,7 @@ require('../../scss/style.scss');
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       email: '',
       password: '',
       errors: '',
@@ -34,17 +34,19 @@ class Login extends Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.login(this.state).then(
-        (response) => {
-          window.localStorage.setItem('firstName', response.data.firstName);
-          window.localStorage.setItem('lastName', response.data.lastName);
-          window.localStorage.setItem('email', response.data.email);
-          window.localStorage.setItem('token', response.data.token);
-          window.localStorage.setItem('userId', response.data.id);
-          window.localStorage.setItem('roleId', response.data.roleId);
+        () => {
+          // console.log(response);
+          // window.localStorage.setItem('firstName', response.data.firstName);
+          // window.localStorage.setItem('lastName', response.data.lastName);
+          // window.localStorage.setItem('email', response.data.email);
+          // window.localStorage.setItem('token', response.data.token);
+          // window.localStorage.setItem('userId', response.data.id);
+          // window.localStorage.setItem('roleId', response.data.roleId);
           this.setState({ shouldRedirect: true });
         }
-      ).catch((error) => {
-        this.setState({ errors: error.data.errors, isLoading: false });
+      ).catch(() => {
+        Materialize.toast('Incorrect Username or password', 4000, 'red');
+        this.setState({ isLoading: false });
       });
     }
   }

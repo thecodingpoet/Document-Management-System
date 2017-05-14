@@ -6,10 +6,11 @@ import { editProfile } from '../actions/editProfile';
 class EditModal extends Component {
   constructor(props) {
     super(props);
+    this.user = this.props.user;
     this.state = {
-      firstName: window.localStorage.firstName ? window.localStorage.firstName : '',
-      lastName: window.localStorage.lastName ? window.localStorage.lastName : '',
-      email: window.localStorage.email ? window.localStorage.email : '',
+      firstName: this.user.firstName ? this.user.firstName : '',
+      lastName: this.user.lastName ? this.user.lastName : '',
+      email: this.user.email ? this.user.email : '',
       password: '',
       errors: '',
       isLoading: false
@@ -26,7 +27,7 @@ class EditModal extends Component {
     }
 
     return isValid;
-  }  
+  }
 
   onChange(event) {
     if (!!this.state.errors[event.target.name]) {
@@ -42,15 +43,18 @@ class EditModal extends Component {
   }
 
   onSubmit(event) {
-    event.preventDefault();
+    // event.preventDefault();
     if (this.isValid()) {
-      const userId = window.localStorage.userId;
+      const userId = this.user.id;
       this.setState({ errors: {}, isLoading: true });
       this.props.editProfile(this.state, userId).then((data) => {
         const user = data.user.data;
-        window.localStorage.setItem('firstName', user.firstName);
-        window.localStorage.setItem('lastName', user.lastName);
-        window.localStorage.setItem('email', user.email);
+        this.setState({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email
+        });
+        $('#editModal').modal('close');
       });
     }
   }
@@ -143,7 +147,13 @@ class EditModal extends Component {
 }
 
 EditModal.propTypes = {
+  user: React.PropTypes.object.isRequired,
   editProfile: React.PropTypes.func.isRequired
 };
 
-export default connect(null, { editProfile })(EditModal);
+function mapStateToProps(state) {
+  return {
+    user: state.auth
+  };
+}
+export default connect(mapStateToProps, { editProfile })(EditModal);

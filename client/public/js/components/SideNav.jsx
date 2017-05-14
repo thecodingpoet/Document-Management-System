@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Avatar from 'react-avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -23,11 +22,12 @@ class MySideNav extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.search = this.search.bind(this);
     this.logout = this.logout.bind(this);
-    const firstName = window.localStorage.getItem('firstName');
-    const lastName = window.localStorage.getItem('lastName');
-    this.roleId = window.localStorage.getItem('roleId');
+    const user = this.props.user;
+    const firstName = user.firstName;
+    const lastName = user.lastName;
+    this.roleId = user.roleId;
     this.name = `${firstName}  ${lastName}`;
-    this.email = window.localStorage.getItem('email');
+    this.email = user.email;
   }
 
   componentDidMount() {
@@ -46,12 +46,6 @@ class MySideNav extends Component {
     $('.button-collapse').sideNav('hide');
   }
 
-  openModal() {
-    return (
-      <p> Hello there </p>
-    );
-  }
-
   logout(event) {
     event.preventDefault();
     this.props.logout();
@@ -65,8 +59,7 @@ class MySideNav extends Component {
   }
 
   render() {
-    const { fireRedirect } = this.state;
-    const roleId = window.localStorage.getItem('roleId');
+    const roleId = this.roleId;
     return (
       <div>
         <nav>
@@ -80,27 +73,10 @@ class MySideNav extends Component {
             </span>
 
             <ul className="right hide-on-med-and-down">
-              <li>
-                <div className="center row">
-                  <div className="col s12 " >
-                      <div className="row" id="topbarsearch">
-                        <div className="red-text input-field col s6 s12 ">
-                          <i className="white material-icons prefix" id="searchIcon">search</i>
-                          <input type="text" placeholder="search" id="autocomplete-input" className="autocomplete" onKeyPress={this.search} />
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </li>
               <li onClick={this.logout}><Link to="/">logout</Link></li>
             </ul>
           </div>
         </nav>
-
-        {fireRedirect && (
-          <Redirect exactly to={'/search'} />
-        )}
-
         <ul id="slide-out" className="side-nav">
           <li><div className="userView">
             <div className="background">
@@ -114,8 +90,9 @@ class MySideNav extends Component {
           </div></li>
           <li><Link to="dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
           <li><Link to="document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
+          <li><Link to="search" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">search</i>Search Documents</Link></li>
           { Number(roleId) === 1
-            ? <li><a className="waves-effect" onClick={this.closeSideNav} href="#editModal"><i className="material-icons">supervisor_account</i>Manage User</a></li>
+            ? <li ><Link to="manage" className="waves-effect" onClick={this.closeSideNav} href="#!"><i className="material-icons">supervisor_account</i>Manage User</Link></li>
             : ''
           }
           <li><a className="waves-effect" onClick={this.closeSideNav} href="#editModal"><i className="material-icons">mode_edit</i>Edit Profile</a></li>
@@ -127,7 +104,13 @@ class MySideNav extends Component {
 }
 
 MySideNav.propTypes = {
-  logout: React.PropTypes.func.isRequired
+  logout: React.PropTypes.func.isRequired,
+  user: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { logout })(MySideNav);
+function mapStateToProps(state) {
+  return {
+    user: state.auth
+  };
+}
+export default connect(mapStateToProps, { logout })(MySideNav);

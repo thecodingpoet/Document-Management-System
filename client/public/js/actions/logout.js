@@ -23,11 +23,6 @@ export function setCurrentUser(user) {
 export function logout() {
   return (dispatch) => {
     localStorage.removeItem('token');
-    localStorage.removeItem('firstName');
-    localStorage.removeItem('lastName');
-    localStorage.removeItem('email');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('roleId');
     dispatch(setCurrentUser({}));
   };
 }

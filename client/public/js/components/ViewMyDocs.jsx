@@ -11,8 +11,8 @@ class ViewMyDocuments extends Component {
   render() {
     return (
       <div className="row">
-        <div id="public" className="col s12 spaces">
-          <MyDocsList docs={this.props.docs} testFunc={this.props.testFunc} />
+        <div id="public" className="col s12">
+          <MyDocsList docs={this.props.docs} testFunc={this.props.testFunc} user={this.props.user} />
         </div>
       </div>
     );

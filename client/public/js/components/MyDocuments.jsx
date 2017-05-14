@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AddModal from './AddModal.jsx';
 import EditProfile from './EditProfile.jsx';
 import AddBtn from './AddButton.jsx';
@@ -13,6 +14,7 @@ class MyDocuments extends Component {
       document: {}
     };
     this.testFunc = this.testFunc.bind(this);
+    this.user = this.props.user;
   }
   componentDidMount() {
     $('.modal').modal();
@@ -31,7 +33,7 @@ class MyDocuments extends Component {
         <EditProfile />
         <EditDocument testDoc={this.state.document} />
 
-        <ViewMyDocs testFunc={this.testFunc} />
+        <ViewMyDocs testFunc={this.testFunc} user={this.user} />
         <AddBtn />
 
       </div>
@@ -40,4 +42,10 @@ class MyDocuments extends Component {
 
 }
 
-export default MyDocuments;
+function mapStateToProps(state) {
+  return {
+    user: state.auth
+  };
+}
+
+export default connect(mapStateToProps, null)(MyDocuments);

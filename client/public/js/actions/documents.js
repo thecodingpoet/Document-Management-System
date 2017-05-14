@@ -33,10 +33,10 @@ export function viewDocs(documents) {
  * @returns {Object} - An object that consist of the type
  * of the document and the action
  */
-export function newDoc(documents) {
+export function newDoc(document) {
   return {
     type: CREATE_DOCUMENTS,
-    documents
+    document
   };
 }
 
@@ -97,8 +97,8 @@ export function createDoc(doc) {
       headers: {
         authorization: token
       }
-    }).then((documents) => {
-      dispatch(newDoc(documents.data.documents));
+    }).then((res) => {
+      dispatch(newDoc(res.data));
     }).catch(() => {
       return false;
     });

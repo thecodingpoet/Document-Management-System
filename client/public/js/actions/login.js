@@ -1,5 +1,15 @@
 import axios from 'axios';
 
+export const LOGIN_USER = 'LOGIN_USER';
+
+
+export function loginUser(user) {
+  return {
+    type: 'LOGIN_USER',
+    user
+  };
+}
+
 /**
  * This method performs login action
  * @export
@@ -7,5 +17,9 @@ import axios from 'axios';
  * @returns
  */
 export function login(data) {
-  return dispatch => axios.post('users/login', data);
+  return dispatch => axios.post('users/login', data)
+    .then((response) => {
+      localStorage.setItem('token', response.data.token);
+      dispatch(loginUser(response.data));
+    });
 }

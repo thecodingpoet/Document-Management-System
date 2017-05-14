@@ -1,14 +1,14 @@
 import React from 'react';
 import MyDocumentCard from './MyDocumentCard.jsx';
 
-export default function MyDocsList({ docs, editDoc, testFunc }) {
+export default function MyDocsList({ docs, editDoc, testFunc, user }) {
   const emptyMessage = (
     <div className="container center-align">
       <p>You have no documents yet</p>
     </div>
   );
 
-  const userId = window.localStorage.getItem('userId');
+  const userId = user.id;
 
   const myDocsList = docs.filter(doc => doc.ownerId === Number(userId));
 

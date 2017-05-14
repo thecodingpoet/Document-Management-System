@@ -48,15 +48,16 @@ class Signup extends Component {
     e.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
-      this.props.userSignUpRequest(this.state).then((response) => {
-        window.localStorage.setItem('firstName', response.data.firstName);
-        window.localStorage.setItem('lastName', response.data.lastName);
-        window.localStorage.setItem('email', response.data.email);
-        window.localStorage.setItem('token', response.data.token);
-        window.localStorage.setItem('userId', response.data.id);
+      this.props.userSignUpRequest(this.state).then(() => {
+        // window.localStorage.setItem('firstName', response.data.firstName);
+        // window.localStorage.setItem('lastName', response.data.lastName);
+        // window.localStorage.setItem('email', response.data.email);
+        // window.localStorage.setItem('token', response.data.token);
+        // window.localStorage.setItem('userId', response.data.id);
         this.setState({ shouldRedirect: true });
-      }).catch((error) => {
-        this.setState({ errors: error.response.data, isLoading: false });
+      }).catch(() => {
+        Materialize.toast('This Email Address is already taken', 4000, 'red');
+        this.setState({ isLoading: false });
       });
     }
   }

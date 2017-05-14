@@ -164,4 +164,5 @@ const mapStateToProps = state => ({
   newDocuments: state.documents,
 });
 
-export default connect(mapStateToProps, { createDoc, fetchPublicDocs })(AddModal);
+export default connect(mapStateToProps,
+{ createDoc, fetchPublicDocs })(AddModal);

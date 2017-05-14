@@ -3,8 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import AddModal from './AddModal.jsx';
 import EditProfile from './EditProfile.jsx';
 import AddBtn from './AddButton.jsx';
-import ViewDocs from './ViewDocuments.jsx';
-
+import ViewDocuments from './ViewDocuments.jsx';
+import Search from './Search.jsx';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -18,11 +18,8 @@ class Dashboard extends Component {
       <div className="row">
         <AddModal />
         <EditProfile />
-
-        <ViewDocs />
-
+        <ViewDocuments />
         <AddBtn />
-
       </div>
     );
   }

@@ -26,6 +26,7 @@ class UserController {
       firstName: user.firstName,
       lastName: user.lastName,
       createdAt: user.createdAt,
+      roleId: user.roleId,
       token
     };
   }

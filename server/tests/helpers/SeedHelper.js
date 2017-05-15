@@ -1,4 +1,3 @@
-
 import database from '../../models';
 import SpecHelper from './SpecHelper';
 

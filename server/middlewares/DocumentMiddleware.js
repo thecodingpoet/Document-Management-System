@@ -1,4 +1,4 @@
-import ResponseHandler from '../Helper/ResponseHandler';
+import ResponseHandler from '../helpers/ResponseHandler';
 import database from '../models/index';
 
 /**

@@ -13,32 +13,27 @@ let regularUserId;
 
 describe('Users:', () => {
   // Clear and populate the database first
-  beforeEach((done) => {
-    SeedHelper.populateRoleTable()
-    database.User.create(regularUser)
-    .then((user) => {
+  before((done) => {
+    SeedHelper.init()
+    .then(() => {
       // fetch regular user token and id for further tests
-      // database.User.create(regularUser)
-      // client.post('/users')
-      // .send(regularUser)
-      // .then((user) => {
+      client.post('/users')
+      .send(regularUser)
+      .end((error, response) => {
         // set regular user token and id for other tests below
-        // regularUserToken = user.token;
-        // console.log('user ===>> ./', regularUserToken);
-        // // console.log(response, 'Resonse');
-        // console.log(regularUserToken, 'Response Token');
-        regularUserId = user.id;
-      // });
+        regularUserToken = response.body.token;
+        regularUserId = response.body.id;
+        done();
+      });
     });
-    done();
   });
 
-  // afterEach((done) => {
-  //   // database.sequelize.sync({ force: true })
-  //   .then(() => {
-  //     done();
-  //   });
-  // });
+  after((done) => {
+    database.sequelize.sync({ force: true })
+    .then(() => {
+      done();
+    });
+  });
 
   describe('Create User', () => {
     const newRegularUser = SpecHelper.generateRandomUser(2);
@@ -156,7 +151,6 @@ describe('Users:', () => {
 
   describe('Login', () => {
     it('should allow login for only CORRECT details of an Admin', (done) => {
-      database.User.create(SpecHelper.validAdminUser);
       client.post('/users/login')
       .send({
         email: SpecHelper.validAdminUser.email,
@@ -197,7 +191,6 @@ describe('Users:', () => {
     });
 
     it('should return a TOKEN if Regular User Login is successful', (done) => {
-      database.User.create(SpecHelper.validRegularUser);
       client.post('/users/login')
       .send({
         email: SpecHelper.validRegularUser.email,
@@ -284,17 +277,16 @@ describe('Users:', () => {
   });
 
   describe('Get Users', () => {
-    // it('should allow NON-Admin with a valid token access to list of users',
-    // (done) => {
-    //   console.log('regularUserToken.. ===>>', regularUser);
-    //   client.get('/users')
-    //   .set({ 'x-access-token': regularUserToken })
-    //   .end((error, response) => {
-    //     expect(response.status).to.equal(200);
-    //     expect(response.body).to.be.instanceof(Object);
-    //     done();
-    //   });
-    // });
+    it('should allow NON-Admin with a valid token access to list of users',
+    (done) => {
+      client.get('/users')
+      .set({ 'x-access-token': regularUserToken })
+      .end((error, response) => {
+        expect(response.status).to.equal(200);
+        expect(response.body).to.be.instanceof(Object);
+        done();
+      });
+    });
 
     it('should Allow an Admin User access to list of Users', (done) => {
       client.get('/users')
@@ -316,30 +308,29 @@ describe('Users:', () => {
   });
 
   describe('Get User', () => {
-    // it('should allow NON-Admin  User with valid token fetch another User',
-    // (done) => {
-    //   client.get(`/users/${regularUserId + 1}`)
-    //   .set({ 'x-access-token': regularUserToken })
-    //   .end((error, response) => {
-    //     expect(response.status).to.equal(200);
-    //     expect(response.body).to.be.instanceOf(Object);
-    //     done();
-    //   });
-    // });
+    it('should allow NON-Admin  User with valid token fetch another User',
+    (done) => {
+      client.get(`/users/${regularUserId + 1}`)
+      .set({ 'x-access-token': regularUserToken })
+      .end((error, response) => {
+        expect(response.status).to.equal(200);
+        expect(response.body).to.be.instanceOf(Object);
+        done();
+      });
+    });
 
-    // it('should Allow an Admin User with valid token fetch another User',
-    // (done) => {
-    //   console.log('tomis admin', adminUserToken);
-    //   client.get(`/users/${regularUserId}`)
-    //   .set({ 'x-access-token': adminUserToken })
-    //   .end((error, response) => {
-    //     expect(response.status).to.equal(200);
-    //     expect(response.body).to.be.instanceOf(Object);
-    //     done();
-    //   });
-    // });
+    it('should Allow an Admin User with valid token fetch another User',
+    (done) => {
+      client.get(`/users/${regularUserId}`)
+      .set({ 'x-access-token': adminUserToken })
+      .end((error, response) => {
+        expect(response.status).to.equal(200);
+        expect(response.body).to.be.instanceOf(Object);
+        done();
+      });
+    });
 
-    it(`should return a 400 status code when an authenticated user
+    it(`should return a 400 status code when an authenticated user 
     passes an invalid user id when trying to fetch a user`,
     (done) => {
       client.get('/users/xxx')
@@ -399,7 +390,7 @@ describe('Users:', () => {
   describe('Update User', () => {
     it('should NOT allow a User update another User profile', (done) => {
       client.put(`/users/${regularUserId + 1}`)
-      .set({ 'x-access-token': ç })
+      .set({ 'x-access-token': regularUserToken })
       .send({ password: 'new password' })
       .end((error, response) => {
         expect(response.status).to.equal(403);
@@ -407,36 +398,36 @@ describe('Users:', () => {
       });
     });
 
-    // it(`should NOT Allow a User with a Valid token Update his password with a
-    // password that is less than the minimum password length`,
-    // (done) => {
-    //   const shortPassword = '123';
-    //   client.put(`/users/${regularUserId}`)
-    //   .send({
-    //     password: shortPassword
-    //   })
-    //   .set({ 'x-access-token': regularUserToken })
-    //   .end((error, response) => {
-    //     expect(response.status).to.equal(400);
-    //     done();
-    //   });
-    // });
+    it(`should NOT Allow a User with a Valid token Update his password with a
+    password that is less than the minimum password length`,
+    (done) => {
+      const shortPassword = '123';
+      client.put(`/users/${regularUserId}`)
+      .send({
+        password: shortPassword
+      })
+      .set({ 'x-access-token': regularUserToken })
+      .end((error, response) => {
+        expect(response.status).to.equal(400);
+        done();
+      });
+    });
 
-    // it(`should NOT Allow a User with a Valid token Update his password with a
-    // password that is more than the maximum password length`,
-    // (done) => {
-    //   const longPassword = `sdfcgvbhnmdzghjbnmdfcghjndghjndmcxfghgggbjknmdcghjn
-    //   gggmdcghvjn dsghvbjndsfghvbjdncsghbjdsghvbjdghvbjdc`;
-    //   client.put(`/users/${regularUserId}`)
-    //   .send({
-    //     password: longPassword
-    //   })
-    //   .set({ 'x-access-token': regularUserToken })
-    //   .end((error, response) => {
-    //     expect(response.status).to.equal(400);
-    //     done();
-    //   });
-    // });
+    it(`should NOT Allow a User with a Valid token Update his password with a
+    password that is more than the maximum password length`,
+    (done) => {
+      const longPassword = `sdfcgvbhnmdzghjbnmdfcghjndghjndmcxfghgggbjknmdcghjn
+      gggmdcghvjn dsghvbjndsfghvbjdncsghbjdsghvbjdghvbjdc`;
+      client.put(`/users/${regularUserId}`)
+      .send({
+        password: longPassword
+      })
+      .set({ 'x-access-token': regularUserToken })
+      .end((error, response) => {
+        expect(response.status).to.equal(400);
+        done();
+      });
+    });
 
     it('should Allow a User Update his password if a valid Token is provided',
     (done) => {

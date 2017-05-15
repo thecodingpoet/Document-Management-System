@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import ResponseHandler from '../Helper/ResponseHandler';
+import ResponseHandler from '../helpers/ResponseHandler';
 import database from '../models';
 
 const SECRET_KEY = `${process.env.SECRET_KEY}`;
@@ -8,7 +8,7 @@ const userDb = database.User;
 /**
  * Class to implement authentication middlewares
  */
-class Auth {
+class Authenticator {
 
   /**
    * Method to get token from a request object
@@ -57,9 +57,9 @@ class Auth {
    * @return {undefined} - Returns undefined
    */
   static authenticateUser(request, response, next) {
-    const token = Auth.getTokenInRequest(request);
+    const token = Authenticator.getTokenInRequest(request);
     if (token) {
-      const decoded = Auth.verifyToken(token);
+      const decoded = Authenticator.verifyToken(token);
       if (decoded) {
         userDb.findById(decoded.userId, {
           attributes: ['activeToken', 'roleId']
@@ -114,4 +114,4 @@ class Auth {
   }
 }
 
-export default Auth;
+export default Authenticator;

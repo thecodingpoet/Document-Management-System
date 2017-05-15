@@ -1,5 +1,5 @@
-import ResponseHandler from '../Helper/ResponseHandler';
-import Authenticator from './Auth';
+import ResponseHandler from '../helpers/ResponseHandler';
+import Authenticator from './Authenticator';
 /**
  * Middleware class to handle verify/check Role related
  * requests

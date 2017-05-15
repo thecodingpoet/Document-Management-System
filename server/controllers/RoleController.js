@@ -1,6 +1,6 @@
 import database from '../models';
-import ErrorHandler from '../Helper/ErrorHandler';
-import ResponseHandler from '../Helper/ResponseHandler';
+import ErrorHandler from '../helpers/ErrorHandler';
+import ResponseHandler from '../helpers/ResponseHandler';
 
 const roleDb = database.Role;
 

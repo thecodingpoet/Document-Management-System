@@ -1,7 +1,7 @@
 import database from '../models';
-import ResponseHandler from '../Helper/ResponseHandler';
-import Authenticator from '../middlewares/Auth';
-import ErrorHandler from '../Helper/ErrorHandler';
+import ResponseHandler from '../helpers/ResponseHandler';
+import Authenticator from '../middlewares/Authenticator';
+import ErrorHandler from '../helpers/ErrorHandler';
 // declare the usersDB
 const userDB = database.User;
 
@@ -19,14 +19,13 @@ class UserController {
    * @return {Object} - new User object containing fields
    * consider safe for public view
    */
-  static getUserFields(user, token) {
+  static getSafeUserFields(user, token) {
     return {
       id: user.id,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       createdAt: user.createdAt,
-      roleId: user.roleId,
       token
     };
   }
@@ -50,7 +49,7 @@ class UserController {
           201,
           Object.assign(
             {},
-            UserController.getUserFields(user, token),
+            UserController.getSafeUserFields(user, token),
             { roleId: user.roleId }
           )
         );
@@ -101,7 +100,7 @@ class UserController {
           ResponseHandler.sendResponse(
             response,
             200,
-            UserController.getUserFields(updatedUser)
+            UserController.getSafeUserFields(updatedUser)
           );
         })
         .catch((error) => {
@@ -127,7 +126,7 @@ class UserController {
         ResponseHandler.sendResponse(
           response,
           200,
-          UserController.getUserFields(user)
+          UserController.getSafeUserFields(user)
         );
       } else {
         ResponseHandler.send404(response);
@@ -183,7 +182,7 @@ class UserController {
           200,
           {
             users: users.rows
-              .map(user => UserController.getUserFields(user)),
+              .map(user => UserController.getSafeUserFields(user)),
             total: users.count
           }
         );
@@ -299,7 +298,7 @@ class UserController {
         });
         const safeUser = Object.assign(
           {},
-          UserController.getUserFields(user),
+          UserController.getSafeUserFields(user),
           { documents });
         ResponseHandler.sendResponse(
           response,
@@ -310,33 +309,6 @@ class UserController {
         ResponseHandler.send404(response);
       }
     });
-  }
-
-  /**
-   * Controller method to search for a user
-   * @static
-   * @param {any} request - Request Object
-   * @param {any} response - Response Object
-   * @return{Void} - returns void
-   * @memberOf UserController
-   */
-  static findUser(request, response) {
-    if (request.query.q) {
-      userDB.User.find({ where: { email: { $like: request.query.q } } })
-       .then((foundUser) => {
-         if (foundUser) {
-           return ResponseHandler.sendResponse(
-             response,
-             302,
-             UserController.formatUserDetails(foundUser)
-            );
-         }
-       }).catch(err => ResponseHandler.sendResponse(
-           response,
-           404,
-           { status: false, message: err }
-         ));
-    }
   }
 }
 

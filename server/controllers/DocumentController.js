@@ -1,7 +1,7 @@
 import database from '../models';
-import ErrorHandler from '../Helper/ErrorHandler';
-import ResponseHandler from '../Helper/ResponseHandler';
-import Authenticator from '../middlewares/Auth';
+import ErrorHandler from '../helpers/ErrorHandler';
+import ResponseHandler from '../helpers/ResponseHandler';
+import Authenticator from '../middlewares/Authenticator';
 
 const documentDb = database.Document;
 
@@ -16,7 +16,7 @@ class DocumentController {
    * @return {Object} - new User object containing fields
    * consider safe for public view
    */
-  static getDocumentFields(document) {
+  static getSafeDocumentFields(document) {
     return {
       id: document.id,
       title: document.title,
@@ -26,7 +26,6 @@ class DocumentController {
       createdAt: document.createdAt
     };
   }
-
   /**
    * Controller method create a new Document
    * @param{Object} request - Request Object
@@ -46,7 +45,7 @@ class DocumentController {
       ResponseHandler.sendResponse(
         response,
         201,
-        DocumentController.getDocumentFields(createdDocument)
+        DocumentController.getSafeDocumentFields(createdDocument)
       );
     })
     .catch((error) => {
@@ -107,6 +106,7 @@ class DocumentController {
     })
     .then((document) => {
       if (document) {
+        // lets chceck required access
         if (
           (document.access === 'public'
           || (requesterRoleId === document.ownerRoleId))
@@ -114,7 +114,7 @@ class DocumentController {
           ResponseHandler.sendResponse(
             response,
             200,
-            DocumentController.getDocumentFields(document)
+            DocumentController.getSafeDocumentFields(document)
           );
         } else if (
           document.ownerId === requesterId ||
@@ -123,7 +123,7 @@ class DocumentController {
           ResponseHandler.sendResponse(
             response,
             200,
-            DocumentController.getDocumentFields(document)
+            DocumentController.getSafeDocumentFields(document)
           );
         } else {
           ResponseHandler.send403(
@@ -143,34 +143,6 @@ class DocumentController {
         error
       );
     });
-  }
-
-
-    /**
-     * Controller method to search for a document
-     * @static
-     * @param {any} request - Request Object
-     * @param {any} response - Response Object
-     * @return{Void} - returns void
-     * @memberOf DocumentController
-     */
-  static findDoc(request, response) {
-    if (request.query.q) {
-      documentDb.find({ where: { title: request.query.q } })
-       .then((foundDoc) => {
-         if (foundDoc) {
-           return ResponseHandler.sendResponse(
-             response,
-             302,
-             DocumentController.formatDocument(foundDoc)
-            );
-         }
-       }).catch(err => ResponseHandler.sendResponse(
-        response,
-        404,
-        { status: false, message: err }
-      ));
-    }
   }
 
   /**

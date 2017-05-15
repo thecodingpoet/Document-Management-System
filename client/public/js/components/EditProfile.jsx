@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import validateInput from '../validations/signup';
 import { editProfile } from '../actions/editProfile';
 
 class EditModal extends Component {
   constructor(props) {
     super(props);
-    this.user = this.props.user;
+    const token = window.localStorage.getItem('token');
+    this.user = jwtDecode(token);
     this.state = {
       firstName: this.user.firstName ? this.user.firstName : '',
       lastName: this.user.lastName ? this.user.lastName : '',
@@ -43,9 +45,9 @@ class EditModal extends Component {
   }
 
   onSubmit(event) {
-    // event.preventDefault();
+    event.preventDefault();
     if (this.isValid()) {
-      const userId = this.user.id;
+      const userId = this.user.userId;
       this.setState({ errors: {}, isLoading: true });
       this.props.editProfile(this.state, userId).then((data) => {
         const user = data.user.data;

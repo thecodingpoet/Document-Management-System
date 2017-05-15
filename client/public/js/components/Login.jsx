@@ -35,13 +35,6 @@ class Login extends Component {
       this.setState({ errors: {}, isLoading: true });
       this.props.login(this.state).then(
         () => {
-          // console.log(response);
-          // window.localStorage.setItem('firstName', response.data.firstName);
-          // window.localStorage.setItem('lastName', response.data.lastName);
-          // window.localStorage.setItem('email', response.data.email);
-          // window.localStorage.setItem('token', response.data.token);
-          // window.localStorage.setItem('userId', response.data.id);
-          // window.localStorage.setItem('roleId', response.data.roleId);
           this.setState({ shouldRedirect: true });
         }
       ).catch(() => {

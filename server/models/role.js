@@ -1,17 +1,17 @@
 export default (sequelize, DataTypes) => {
   const Role = sequelize.define('Role', {
     id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      type: DataTypes.INTEGER
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: {
-        msg: 'This Role has been taken'
+        msg: 'Role title already taken.'
       },
+      allowNull: false,
       validate: {
         notEmpty: {
           msg: 'Title cannot be empty'
@@ -21,7 +21,7 @@ export default (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate(models) {
-        // associations can be defined here
+        // Associations defined here
         Role.hasMany(models.User, {
           foreignKey: 'roleId'
         });

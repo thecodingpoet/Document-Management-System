@@ -1,11 +1,5 @@
 export default (sequelize, DataTypes) => {
   const Document = sequelize.define('Document', {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -47,11 +41,10 @@ export default (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
-      // associations can be defined here
+      // Associations defined here
       associate: (models) => {
         Document.belongsTo(models.User, {
-          foreignKey: 'ownerId',
-          onDelete: 'CASCADE'
+          foreignKey: 'ownerId'
         });
       }
     }

@@ -8,7 +8,6 @@ import { createDoc } from '../actions/documents';
 import validateInput from '../validations/documents';
 import { fetchPublicDocs } from '../actions/documents';
 
-
 class AddModal extends Component {
 
   constructor(props) {
@@ -17,7 +16,8 @@ class AddModal extends Component {
       title: '',
       content: '',
       access: 'public',
-      errors: ''
+      errors: '',
+      isLoading: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -46,11 +46,13 @@ class AddModal extends Component {
       this.setState({ errors: {}, isLoading: true });
       this.props.createDoc(this.state)
       .then(() => {
+        Materialize.toast('Document Created', 4000, 'green');
         this.props.fetchPublicDocs();
         $('#modal1').modal('close');
+      }).catch(() => {
+         Materialize.toast('Oops! Something went wrong', 4000, 'red');
+        this.setState({ isLoading: false });
       });
-    } else {
-      event.preventDefault();
     }
   }
 
@@ -85,7 +87,7 @@ class AddModal extends Component {
   }
 
   render() {
-    const { errors, title, content } = this.state;
+    const { errors, title, content, isLoading } = this.state;
     return (
       <div id="modal1" className="modal">
         <div className="modal-content">
@@ -146,6 +148,7 @@ class AddModal extends Component {
                   type="submit"
                   className="modal-action waves-effect waves-green btn-flat"
                   value="Submit"
+                  disabled={isLoading}
                 />
               </div>
             </div>

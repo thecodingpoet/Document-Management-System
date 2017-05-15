@@ -70,7 +70,7 @@ class Search extends Component {
       <div>
         <div className="container">
           <div className="row">
-            <div className="col s12 searchDiv">
+            <div className="col s12">
               <div className="row">
                 <div className="input-field offset-s6 col s6">
                   <form method="get">
@@ -88,6 +88,9 @@ class Search extends Component {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="center-align">
+            <img src={require('../../images/search.jpg')} alt=" Search Icon" id="searchIcon" />
           </div>
           <div>
             { documentsFound.length === 0 ? emptyDiv : docsList }

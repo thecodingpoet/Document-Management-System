@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import Avatar from 'react-avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { logout } from '../actions/logout';
@@ -18,16 +19,18 @@ class MySideNav extends Component {
       fireRedirect: false
     };
 
+    const token = window.localStorage.getItem('token');
+    this.user = jwtDecode(token);
+    this.firstName = this.user.firstName;
+    this.lastName = this.user.lastName;
+    this.name = `${this.firstName}  ${this.lastName}`;
+    this.email = this.user.email;
+    this.roleId = this.user.roleId;
+
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.search = this.search.bind(this);
     this.logout = this.logout.bind(this);
-    const user = this.props.user;
-    const firstName = user.firstName;
-    const lastName = user.lastName;
-    this.roleId = user.roleId;
-    this.name = `${firstName}  ${lastName}`;
-    this.email = user.email;
   }
 
   componentDidMount() {
@@ -59,7 +62,6 @@ class MySideNav extends Component {
   }
 
   render() {
-    const roleId = this.roleId;
     return (
       <div>
         <nav>
@@ -91,7 +93,7 @@ class MySideNav extends Component {
           <li><Link to="dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
           <li><Link to="document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
           <li><Link to="search" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">search</i>Search Documents</Link></li>
-          { Number(roleId) === 1
+          { Number(this.roleId) === 1
             ? <li ><Link to="manage" className="waves-effect" onClick={this.closeSideNav} href="#!"><i className="material-icons">supervisor_account</i>Manage User</Link></li>
             : ''
           }

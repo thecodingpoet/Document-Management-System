@@ -32,7 +32,7 @@ class EditModal extends Component {
   }
 
   onChange(event) {
-    if (!!this.state.errors[event.target.name]) {
+    if (this.state.errors[event.target.name]) {
       const errors = Object.assign({}, this.state.errors);
       delete errors[event.target.name];
       this.setState({
@@ -56,7 +56,10 @@ class EditModal extends Component {
           lastName: user.lastName,
           email: user.email
         });
+        Materialize.toast('User Updated', 4000, 'green');
         $('#editModal').modal('close');
+      }).catch(() => {
+        Materialize.toast('Oops! Something went wrong', 4000, 'red');
       });
     }
   }

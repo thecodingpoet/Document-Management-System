@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 // import Pagination from '../components/Pagination';
 import { getAllUsers, deleteUser } from '../actions/users';
 
-
 require('../../scss/style.scss');
 
 
@@ -26,11 +25,11 @@ class ManageUser extends Component {
   confirmDeletion(callback, documentId) {
     swal({
       title: 'Are you sure?',
-      text: 'Would you like to delete this document?',
+      text: 'Would you like to delete this user?',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Yes, delete!',
       closeOnConfirm: false,
       closeOnCancel: false
     },

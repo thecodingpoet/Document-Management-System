@@ -7,11 +7,12 @@ import dotenv from 'dotenv';
 import UserRoutes from './server/routes/UserRoutes';
 import DocumentRoutes from './server//routes/DocumentRoutes';
 import RoleRoutes from './server/routes/RoleRoutes';
+import swagger from './server/routes/swagger';
 
 dotenv.config();
 const app = express();
 const router = express.Router();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 
 // use morgan for logging out requests to the console
 app.use(morgan('tiny'));
@@ -20,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/src/')));
 
 
+
+swagger(router);
 // set up User related routes
 UserRoutes.setUserRoutes(router);
 
@@ -29,7 +32,9 @@ DocumentRoutes.setDocumentRoutes(router);
 // set up Roles related routes
 RoleRoutes.setRoleRoutes(router);
 
+app.use('/docs', express.static(path.join(__dirname, './server/swagger/')));
 app.use(router);
+
 
 app.all('*', (req, res) => {
   res.sendFile(`${__dirname}/client/src/index.html`);
@@ -40,9 +45,6 @@ app.listen(port, () => {
 });
 
 export default app;
-
-
-
 
 
 

@@ -1,29 +1,12 @@
-import axios from 'axios';
+import actionTypes from './actionTypes';
 
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const setCurrentUser = user => ({
+  type: actionTypes.SET_CURRENT_USER,
+  user
+});
 
-/**
- * setCurrentUser
- * @export
- * @param {any} user
- * @returns {object} object
- */
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER,
-    user
-  };
-}
-
-/**
- * logout
- * @export
- * @returns {func} function
- */
-export function logout() {
-  return (dispatch) => {
-    localStorage.removeItem('token');
-    dispatch(setCurrentUser({}));
-  };
-}
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('token');
+  dispatch(setCurrentUser({}));
+};
 

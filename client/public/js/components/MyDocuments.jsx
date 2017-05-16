@@ -13,7 +13,7 @@ class MyDocuments extends Component {
     this.state = {
       document: {}
     };
-    this.testFunc = this.testFunc.bind(this);
+    this.documentSelected = this.documentSelected.bind(this);
     this.user = this.props.user;
   }
   componentDidMount() {
@@ -22,7 +22,7 @@ class MyDocuments extends Component {
   }
 
 
-  testFunc(document) {
+  documentSelected(document) {
     this.setState({ document });
   }
 
@@ -33,7 +33,7 @@ class MyDocuments extends Component {
         <EditProfile />
         <EditDocument testDoc={this.state.document} />
 
-        <ViewMyDocs testFunc={this.testFunc} user={this.user} />
+        <ViewMyDocs documentSelected={this.documentSelected} user={this.user} />
         <AddBtn />
 
       </div>

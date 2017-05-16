@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
 import { createDoc } from '../actions/documents';
 import validateInput from '../validations/documents';
-import { fetchPublicDocs } from '../actions/documents';
+import { fetchAllDocs } from '../actions/documents';
 
 class AddModal extends Component {
 
@@ -41,17 +41,16 @@ class AddModal extends Component {
   }
 
   onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
-      event.preventDefault();
       this.setState({ errors: {}, isLoading: true });
+      debugger;
       this.props.createDoc(this.state)
       .then(() => {
+        debugger;
         Materialize.toast('Document Created', 4000, 'green');
-        this.props.fetchPublicDocs();
+        this.props.fetchAllDocs();
         $('#modal1').modal('close');
-      }).catch(() => {
-         Materialize.toast('Oops! Something went wrong', 4000, 'red');
-        this.setState({ isLoading: false });
       });
     }
   }
@@ -145,6 +144,7 @@ class AddModal extends Component {
                   className="modal-action modal-close waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
+                  id="createBtn"
                   type="submit"
                   className="modal-action waves-effect waves-green btn-flat"
                   value="Submit"
@@ -161,11 +161,11 @@ class AddModal extends Component {
 
 AddModal.propTypes = {
   createDoc: React.PropTypes.func.isRequired,
-  fetchPublicDocs: React.PropTypes.func.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
   newDocuments: state.documents,
 });
 
 export default connect(mapStateToProps,
-{ createDoc, fetchPublicDocs })(AddModal);
+{ createDoc, fetchAllDocs })(AddModal);

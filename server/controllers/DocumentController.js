@@ -16,7 +16,7 @@ class DocumentController {
    * @return {Object} - new User object containing fields
    * consider safe for public view
    */
-  static getSafeDocumentFields(document) {
+  static getDocumentFields(document) {
     return {
       id: document.id,
       title: document.title,
@@ -45,7 +45,7 @@ class DocumentController {
       ResponseHandler.sendResponse(
         response,
         201,
-        DocumentController.getSafeDocumentFields(createdDocument)
+        DocumentController.getDocumentFields(createdDocument)
       );
     })
     .catch((error) => {
@@ -88,6 +88,33 @@ class DocumentController {
   }
 
   /**
+   * Search Document controller
+   * @static
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @return{Void} - returns void
+   * @memberOf DocumentController
+   */
+  static searchDocuments(request, response) {
+    if (request.query.q) {
+      documentDb.find({ where: { title: request.query.q } })
+       .then((foundDoc) => {
+         if (foundDoc) {
+           return ResponseHandler.sendResponse(
+             response,
+             302,
+             DocumentController.formatDocument(foundDoc)
+            );
+         }
+       }).catch(err => ResponseHandler.sendResponse(
+           response,
+           404,
+           { status: false, message: err }
+         ));
+    }
+  }
+
+  /**
    * Controller method fetch a specific Document
    * Only an admin can fetch all documents regardless of their access type
    * Non-Admin users can only fetch their private documents and public documents
@@ -114,7 +141,7 @@ class DocumentController {
           ResponseHandler.sendResponse(
             response,
             200,
-            DocumentController.getSafeDocumentFields(document)
+            DocumentController.getDocumentFields(document)
           );
         } else if (
           document.ownerId === requesterId ||
@@ -123,7 +150,7 @@ class DocumentController {
           ResponseHandler.sendResponse(
             response,
             200,
-            DocumentController.getSafeDocumentFields(document)
+            DocumentController.getDocumentFields(document)
           );
         } else {
           ResponseHandler.send403(

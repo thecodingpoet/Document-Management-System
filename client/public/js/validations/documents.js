@@ -1,8 +1,15 @@
 import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
+/**
+ * Validate input function
+ * @export
+ * @param {any} data - input data
+ * @returns {Object} - Object consisting of errors object and boolean
+ * to indicate if input is valid
+ */
 export default function validateInput(data) {
-  const errors = {}; 
+  const errors = {};
 
   if (validator.isEmpty(data.title)) {
     errors.title = 'This Field is required';
@@ -17,5 +24,4 @@ export default function validateInput(data) {
     isValid: isEmpty(errors)
   };
 }
-
 

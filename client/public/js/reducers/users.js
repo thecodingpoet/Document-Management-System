@@ -1,11 +1,23 @@
-import { GET_ALL_USERS, DELETE_USER_SUCCESS } from '../actions/users';
+import actionTypes from '../actions/actionTypes';
 
-export default function documents(state = [], action = {}) {
+/**
+ * User reducer
+ * @export
+ * @param {any} [state={}]
+ * @param {any} [action={}]
+ * @returns {state} - state
+ */
+export default function user(state = {}, action = {}) {
   switch (action.type) {
-  case GET_ALL_USERS:
-    return action.users;
-  case DELETE_USER_SUCCESS:
-    return state.filter(item => item.id !== action.id);
+  case actionTypes.GET_ALL_USERS:
+    return {
+      users: action.users,
+      pages: action.pages
+    };
+  case actionTypes.DELETE_USER_SUCCESS:
+    return Object.assign({}, state, {
+      users: state.users.filter(item => item.id !== action.id)
+    });
   default: return state;
   }
 }

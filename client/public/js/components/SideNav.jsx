@@ -90,9 +90,9 @@ class MySideNav extends Component {
             <span className="white-text name">{this.name}</span>
             <span className="white-text email">{this.email}</span>
           </div></li>
-          <li><Link to="dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
-          <li><Link to="document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
-          <li><Link to="search" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">search</i>Search Documents</Link></li>
+          <li><Link to="/dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
+          <li><Link to="/document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
+          <li><Link to="/search" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">search</i>Search Documents</Link></li>
           { Number(this.roleId) === 1
             ? <li ><Link to="manage" className="waves-effect" onClick={this.closeSideNav} href="#!"><i className="material-icons">supervisor_account</i>Manage User</Link></li>
             : ''

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import queryString from 'query-string';
+import EditProfile from './EditProfile.jsx';
 import DocumentCard from './DocumentCard.jsx';
-import { fetchPublicDocs } from '../actions/documents';
+import { fetchAllDocs } from '../actions/documents';
 
 
 class Search extends Component {
@@ -11,7 +11,8 @@ class Search extends Component {
     this.state = {
       q: '',
       documentsFound: [],
-      emptyMessage: ''
+      emptyMessage: '',
+      showIcon: true
     };   
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
@@ -23,7 +24,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPublicDocs();
+    this.props.fetchAllDocs();
   }
 
   searchDocuments(documents, searchTerm) {
@@ -49,6 +50,7 @@ class Search extends Component {
       const documentsFound = this.findMatching(documents);
       this.setState({ documentsFound });
       this.setState({ emptyMessage: 'No result Found' });
+      this.setState({ showIcon: false });
     }
   }
 
@@ -90,12 +92,17 @@ class Search extends Component {
             </div>
           </div>
           <div className="center-align">
-            <img src={require('../../images/search.jpg')} alt=" Search Icon" id="searchIcon" />
+            {
+              this.state.showIcon ?
+                <img src={require('../../images/search.jpg')} alt=" Search Icon" id= "searchIcon" />
+                : ''
+            }
           </div>
           <div>
             { documentsFound.length === 0 ? emptyDiv : docsList }
           </div>
         </div>
+        <EditProfile />
       </div>
     );
   }
@@ -108,8 +115,8 @@ function mapStateToProps(state) {
 }
 
 Search.propTypes = {
-  fetchPublicDocs: React.PropTypes.func.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired,
   docs: React.PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps, { fetchPublicDocs })(Search);
+export default connect(mapStateToProps, { fetchAllDocs })(Search);

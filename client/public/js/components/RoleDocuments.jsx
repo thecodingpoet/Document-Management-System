@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import RoleDocsList from './RoleDocsList.jsx';
 import { connect } from 'react-redux';
-import { fetchPublicDocs } from '../actions/documents.js';
+import { fetchAllDocs } from '../actions/documents.js';
 
 class RoleDocuments extends Component {
   componentDidMount() {
-    this.props.fetchPublicDocs();
+    this.props.fetchAllDocs();
   }
 
   render() {
@@ -18,7 +18,7 @@ class RoleDocuments extends Component {
 }
 
 RoleDocuments.propTypes = {
-  fetchPublicDocs: React.PropTypes.func.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired,
   docs: React.PropTypes.array.isRequired
 };
 
@@ -28,4 +28,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchPublicDocs })(RoleDocuments);
+export default connect(mapStateToProps, { fetchAllDocs })(RoleDocuments);

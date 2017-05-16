@@ -9,7 +9,7 @@ require('../../scss/style.scss');
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       email: '',
       password: '',
       errors: '',
@@ -57,6 +57,10 @@ class Login extends Component {
     }
   }
 
+  /**
+   * @returns
+   * @memberOf Login
+   */
   render() {
     const { errors, email, password, isLoading } = this.state;
     return (
@@ -97,7 +101,8 @@ class Login extends Component {
               </div>
               <div className="row">
                 <button
-                  className="btn waves-effect waves-light offset-s3 col s6 blue darken-3"
+                  className="btn waves-effect
+                  waves-light offset-s3 col s6 blue darken-3"
                   type="submit"
                   name="action"
                   disabled={isLoading}

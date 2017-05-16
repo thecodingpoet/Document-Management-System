@@ -203,9 +203,7 @@ describe('Users:', () => {
       });
     });
 
-    it(`should ensure payload of returned token does not contain
-    sensitivedata of the User(for security reasons, only the user id
-    should be exposed if necessary)`,
+    it('should ensure payload of returned token has all the informations',
     (done) => {
       client.post('/users/login')
       .send({
@@ -219,7 +217,9 @@ describe('Users:', () => {
           new Buffer(tokenPayload, 'base64').toString()
         );
         expect(decodedToken).to.have.property('userId');
-        expect(decodedToken).to.not.have.property('roleId');
+        expect(decodedToken).to.have.property('roleId');
+        expect(decodedToken).to.have.property('firstName');
+        expect(decodedToken).to.have.property('lastName');
         done();
       });
     });

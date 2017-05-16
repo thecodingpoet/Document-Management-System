@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PrivateDocsList from './PrivateDocsList.jsx';
 import { connect } from 'react-redux';
-import { fetchPublicDocs } from '../actions/documents.js';
+import { fetchAllDocs } from '../actions/documents.js';
 
 class PrivateDocuments extends Component {
   componentDidMount() {
-    this.props.fetchPublicDocs();
+    this.props.fetchAllDocs();
   }
 
   render() {
@@ -18,7 +18,7 @@ class PrivateDocuments extends Component {
 }
 
 PrivateDocuments.propTypes = {
-  fetchPublicDocs: React.PropTypes.func.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired,
   docs: React.PropTypes.array.isRequired
 };
 
@@ -28,5 +28,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchPublicDocs })(PrivateDocuments);
+export default connect(mapStateToProps, { fetchAllDocs })(PrivateDocuments);
 

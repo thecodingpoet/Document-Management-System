@@ -1,4 +1,4 @@
-[![Build Status](https://semaphoreci.com/api/v1/thecodingpoet/document-management-system-6/branches/development/shields_badge.svg)](https://semaphoreci.com/thecodingpoet/document-management-system-6) [![Coverage Status](https://coveralls.io/repos/github/andela-oduyile/Document-Management-System/badge.svg?branch=chore%2F142496269%2Fintegrate-coveralls-code-coverage)](https://coveralls.io/github/andela-oduyile/Document-Management-System?branch=chore%2F142496269%2Fintegrate-coveralls-code-coverage) [![Code Climate](https://codeclimate.com/github/andela-oduyile/Document-Management-System/badges/gpa.svg)](https://codeclimate.com/github/andela-oduyile/Document-Management-System)
+[![Build Status](https://semaphoreci.com/api/v1/thecodingpoet/document-management-system-6/branches/chore-142496267-integrate-houndci/shields_badge.svg)](https://semaphoreci.com/thecodingpoet/document-management-system-6) [![Coverage Status](https://coveralls.io/repos/github/andela-oduyile/Document-Management-System/badge.svg)](https://coveralls.io/github/andela-oduyile/Document-Management-System) [![Code Climate](https://codeclimate.com/github/andela-oduyile/Document-Management-System/badges/gpa.svg)](https://codeclimate.com/github/andela-oduyile/Document-Management-System)
 # Document-Management-System
 
 # Document-Management-System
@@ -49,7 +49,7 @@ The frontend was built with the [react](https://facebook.github.io/react/) and [
 ---
 
 - Clone the project repository.
-- Run git clone https://github.com/andela-oduyile/Document-Management-System.git
+- Run git clone https://github.com/andela-oduyile/Document-Management-System.
 - Change directory into the Document-Management-System directory.
 - Run npm install to install the dependencies in the package.json file.
 - Use Postman or any API testing tool of your choice to access the endpoints.
@@ -59,6 +59,12 @@ The frontend was built with the [react](https://facebook.github.io/react/) and [
 - Run DB seeder command with `sequelize db:seed` to seed initial data into your DB.
 - Start the app with `$ npm start`
 - Login, Sign Up and start creating Documents once the app opens up on the browser
+
+### Testing with Postman
+---
+
+You can read the Documentation [here](https://document-man.herokuapp.com/doc) and test out the routes on postman
+
 
 ## Endpoints
 Here's the collection of routes. They can be checked out on Postman
@@ -96,26 +102,17 @@ DELETE /roles/:id               |   Delete a Role.
 
 It should be noted that the endpoints for roles here are only available to the Admin.
 
-### Technologies Used
----
-- JavaScript (ES6)
-- Node.js
-- Express
-- Postgresql
-- React/Redux
-- Sequelize ORM.
-
 #### Contributing
 ---
 
 1. Fork this repositry to your account.
-2. Clone your repositry: git clone https://github.com/andela-hchukwu/Document-Management-System.git
+2. Clone your repositry: git clone https://github.com/andela-oduyile/Document-Management-System
 3. Create your feature branch: git checkout -b new-feature
 4. Commit your changes: git commit -m "did something"
 5. Push to the remote branch: git push origin new-feature
 6. Open a pull request.
 
 #### Licence
-ISC
+MIT
 
 Copyright (c) 2017 Duyile Oluwatomi John

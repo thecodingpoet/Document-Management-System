@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SelectField from 'material-ui/SelectField';
@@ -5,10 +7,19 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
 import { editDoc } from '../actions/documents';
-import { fetchPublicDocs } from '../actions/documents';
+import { fetchAllDocs } from '../actions/documents';
 
+/**
+ * @class EditDocument
+ * @extends {Component}
+ */
 class EditDocument extends Component {
 
+  /**
+   * Creates an instance of EditDocument.
+   * @param {any} props - props
+   * @memberOf EditDocument
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -23,21 +34,36 @@ class EditDocument extends Component {
     this.onDropdownChange = this.onDropdownChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps, nextProps.testDoc.hasOwnProperty('access')) {
-        this.setState({
-          title: nextProps.testDoc.title,
-          content: nextProps.testDoc.content,
-          access: nextProps.testDoc.access
-        });
-        tinymce.activeEditor.setContent(nextProps.testDoc.content);
-    }
-  }
-
+  /**
+   * @returns {void}
+   * @memberOf EditDocument
+   */
   componentDidMount() {
     $('select').material_select();
   }
 
+  /**
+   * @param {any} nextProps - nextPrps
+   * @memberOf EditDocument
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps, nextProps.testDoc.hasOwnProperty('access')) {
+      this.setState({
+        title: nextProps.testDoc.title,
+        content: nextProps.testDoc.content,
+        access: nextProps.testDoc.access
+      });
+      tinymce.activeEditor.setContent(nextProps.testDoc.content);
+    }
+  }
+
+
+  /**
+   * @param {any} event -event
+   * @memberOf EditDocument
+   *  @returns {void}
+   */
   onChange(event) {
     if (this.state.errors[event.target.name]) {
       const errors = Object.assign({}, this.state.errors);
@@ -51,20 +77,37 @@ class EditDocument extends Component {
     }
   }
 
+  /**
+   * @param {any} event - event
+   * @memberOf EditDocument
+   * @returns {void}
+   */
   onSubmit(event) {
     event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
     this.props.editDoc(this.state, this.props.testDoc.id, 'DocumentId')
     .then(() => {
-      this.props.fetchPublicDocs();
+      this.props.fetchAllDocs();
       $('#editDoc').modal('close');
     });
   }
 
+  /**
+   * @param {any} event - event
+   * @param {any} index - index
+   * @param {any} value - value of dropdown
+   * @returns {void}
+   * @memberOf EditDocument
+   */
   onDropdownChange(event, index, value) {
     this.setState({ access: value });
   }
 
+  /**
+   * @param {any} event - event
+   * @returns {any} editor content
+   * @memberOf EditDocument
+   */
   handleEditorChange(event) {
     if (this.state.errors.content) {
       delete this.state.errors.content;
@@ -78,6 +121,10 @@ class EditDocument extends Component {
     }
   }
 
+  /**
+   * @returns {jsx} - Edit Document
+   * @memberOf EditDocument
+   */
   render() {
     const { errors, title, content } = this.state;
     return (
@@ -107,7 +154,8 @@ class EditDocument extends Component {
                   content={content}
                   config={{
                     plugins: 'autolink link image lists print preview',
-                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                    toolbar:
+                    'undo redo | bold italic | alignleft aligncenter alignright'
                   }}
                   onChange={this.handleEditorChange}
                 />
@@ -134,7 +182,8 @@ class EditDocument extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action modal-close waves-effect waves-green btn-flat"
+                  className="modal-action modal-close
+                   waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
                   type="submit"
@@ -152,11 +201,18 @@ class EditDocument extends Component {
 }
 
 EditDocument.propTypes = {
-  editDoc: React.PropTypes.func.isRequired
+  editDoc: React.PropTypes.func.isRequired,
+  // testDoc: React.PropTypes.Object.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired
 };
 
+/**
+ * @param {any} state - state
+ * @returns {object} - list of all documents
+ */
 function mapStateToProps(state) {
   return { document: state.documents };
 }
 
-export default connect(mapStateToProps, { editDoc, fetchPublicDocs })(EditDocument);
+export default connect(mapStateToProps,
+  { editDoc, fetchAllDocs })(EditDocument);

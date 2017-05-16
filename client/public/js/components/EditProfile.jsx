@@ -1,12 +1,25 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import validateInput from '../validations/signup';
 import { editProfile } from '../actions/editProfile';
 
+/**
+ * @class EditModal
+ * @extends {Component}
+ */
 class EditModal extends Component {
+  /**
+   * Creates an instance of EditModal.
+   * @param {any} props - props
+   * @memberOf EditModal
+   */
   constructor(props) {
     super(props);
-    this.user = this.props.user;
+    const token = window.localStorage.getItem('token');
+    this.user = jwtDecode(token);
     this.state = {
       firstName: this.user.firstName ? this.user.firstName : '',
       lastName: this.user.lastName ? this.user.lastName : '',
@@ -19,18 +32,13 @@ class EditModal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if (!isValid) {
-      this.setState({ errors });
-    }
-
-    return isValid;
-  }
-
+  /**
+   * @param {any} event - event
+   * @returns {void}
+   * @memberOf EditModal
+   */
   onChange(event) {
-    if (!!this.state.errors[event.target.name]) {
+    if (this.state.errors[event.target.name]) {
       const errors = Object.assign({}, this.state.errors);
       delete errors[event.target.name];
       this.setState({
@@ -42,10 +50,15 @@ class EditModal extends Component {
     }
   }
 
+  /**
+   * @param {any} event - event
+   * @returns {void}
+   * @memberOf EditModal
+   */
   onSubmit(event) {
-    // event.preventDefault();
+    event.preventDefault();
     if (this.isValid()) {
-      const userId = this.user.id;
+      const userId = this.user.userId;
       this.setState({ errors: {}, isLoading: true });
       this.props.editProfile(this.state, userId).then((data) => {
         const user = data.user.data;
@@ -54,11 +67,32 @@ class EditModal extends Component {
           lastName: user.lastName,
           email: user.email
         });
+        Materialize.toast('User Updated', 4000, 'green');
         $('#editModal').modal('close');
+      }).catch(() => {
+        Materialize.toast('Oops! Something went wrong', 4000, 'red');
       });
     }
   }
 
+  /**
+ * @returns {Boolean} - True if valid. False Otherwise
+ * @memberOf EditModal
+ */
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
+  /**
+   * @returns {jsx} - Edit Modal
+   * @memberOf EditModal
+   */
   render() {
     const { errors, email, password, firstName, lastName } = this.state;
     return (
@@ -129,7 +163,8 @@ class EditModal extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action modal-close waves-effect waves-green btn-flat"
+                  className="modal-action
+                  modal-close waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
                   type="submit"
@@ -147,10 +182,13 @@ class EditModal extends Component {
 }
 
 EditModal.propTypes = {
-  user: React.PropTypes.object.isRequired,
   editProfile: React.PropTypes.func.isRequired
 };
 
+/**
+ * @param {any} state - state
+ * @returns {Object} - User Object
+ */
 function mapStateToProps(state) {
   return {
     user: state.auth

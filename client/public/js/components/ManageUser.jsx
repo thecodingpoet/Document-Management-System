@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import ReactDOM from 'react-dom';
-// import Pagination from '../components/Pagination';
+import { Pagination } from 'react-materialize';
 import { getAllUsers, deleteUser } from '../actions/users';
-
 
 require('../../scss/style.scss');
 
@@ -26,11 +25,11 @@ class ManageUser extends Component {
   confirmDeletion(callback, documentId) {
     swal({
       title: 'Are you sure?',
-      text: 'Would you like to delete this document?',
+      text: 'Would you like to delete this user?',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Yes, delete!',
       closeOnConfirm: false,
       closeOnCancel: false
     },
@@ -42,16 +41,31 @@ class ManageUser extends Component {
         swal('Cancelled!', 'User has not been deleted.', 'error');
       }
     });
-  };
+  }
+
   /**
    * @returns
    * @memberOf ManageUser
    */
   render() {
-    const usersList = this.props.users;
+    let usersList = [];
+    console.log(this.props);
+    if (this.props.users.users !== undefined) {
+      usersList = this.props.users.users;
+    }
     return (
       <div className="container" id="usersTable">
         <h5><b>Manage Users</b></h5>
+        <center>
+          <Pagination
+            items={this.props.users.pages}
+            maxButtons={8}
+            onSelect={(page) => {
+              const offset = (page - 1) * 10;
+              this.props.getAllUsers(offset);
+            }}
+          />
+        </center>
         <table className="striped">
           <thead>
             <tr>

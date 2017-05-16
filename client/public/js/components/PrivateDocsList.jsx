@@ -1,4 +1,5 @@
 import React from 'react';
+import jwtDecode from 'jwt-decode';
 import DocumentCard from './DocumentCard.jsx';
 
 export default function PrivateDocsList({ docs }) {
@@ -7,8 +8,14 @@ export default function PrivateDocsList({ docs }) {
       <p className="center-align">There are no Private Documents yet</p>
     </div>
   );
+  const token = window.localStorage.getItem('token');
+  const user = jwtDecode(token);
+  const userId = user.userId;
 
-  const privateDocsList = docs.filter(doc => doc.access === 'private');
+  const privateDocsList = docs.filter(
+    doc => doc.access === 'private'
+    && doc.ownerId === userId
+  );
 
   const docsList = (
     <div className="container" id="docList">

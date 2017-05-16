@@ -24,6 +24,22 @@
 	color: red;
 }
 
+.myDocument {
+	width: 70%;
+	height: 80vh;
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 40px;
+	padding-top: 20px;
+	padding-left: 30px;
+}
+
+.card {
+	cursor: pointer;
+	color: blue;
+}
+
 #topbarsearch .input-field .prefix { 
 	width:0rem !important;    
 }
@@ -39,12 +55,11 @@
 	color: black;
 }
 
-.searchDiv {
-	margin-top: -200px;
-}
-
 #searchIcon {
 	color: white;
+	margin-top: 50px;
+	width: 200px;
+	height: 200px;
 }
 
 #autocomplete-input {
@@ -207,6 +222,13 @@
 }
 .content {
 	min-height: calc(100vh - 70px);
+}
+
+.docContent {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #footerText{
 	color: #424242;

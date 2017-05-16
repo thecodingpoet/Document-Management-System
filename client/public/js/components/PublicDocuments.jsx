@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PublicDocsList from './PublicDocsList.jsx';
-import { fetchPublicDocs } from '../actions/documents.js';
+import { fetchAllDocs } from '../actions/documents.js';
 
 class PublicDocuments extends Component {
   componentDidMount() {
-    this.props.fetchPublicDocs();
+    this.props.fetchAllDocs();
   }
 
   render() {
@@ -18,7 +18,7 @@ class PublicDocuments extends Component {
 }
 
 PublicDocuments.propTypes = {
-  fetchPublicDocs: React.PropTypes.func.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired,
   docs: React.PropTypes.array.isRequired
 };
 
@@ -28,4 +28,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchPublicDocs })(PublicDocuments);
+export default connect(mapStateToProps, { fetchAllDocs })(PublicDocuments);

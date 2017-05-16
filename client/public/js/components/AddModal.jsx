@@ -6,8 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
 import { createDoc } from '../actions/documents';
 import validateInput from '../validations/documents';
-import { fetchPublicDocs } from '../actions/documents';
-
+import { fetchAllDocs } from '../actions/documents';
 
 class AddModal extends Component {
 
@@ -17,7 +16,8 @@ class AddModal extends Component {
       title: '',
       content: '',
       access: 'public',
-      errors: ''
+      errors: '',
+      isLoading: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -41,16 +41,17 @@ class AddModal extends Component {
   }
 
   onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
-      event.preventDefault();
       this.setState({ errors: {}, isLoading: true });
+      debugger;
       this.props.createDoc(this.state)
       .then(() => {
-        this.props.fetchPublicDocs();
+        debugger;
+        Materialize.toast('Document Created', 4000, 'green');
+        this.props.fetchAllDocs();
         $('#modal1').modal('close');
       });
-    } else {
-      event.preventDefault();
     }
   }
 
@@ -85,7 +86,7 @@ class AddModal extends Component {
   }
 
   render() {
-    const { errors, title, content } = this.state;
+    const { errors, title, content, isLoading } = this.state;
     return (
       <div id="modal1" className="modal">
         <div className="modal-content">
@@ -143,9 +144,11 @@ class AddModal extends Component {
                   className="modal-action modal-close waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
+                  id="createBtn"
                   type="submit"
                   className="modal-action waves-effect waves-green btn-flat"
                   value="Submit"
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -158,11 +161,11 @@ class AddModal extends Component {
 
 AddModal.propTypes = {
   createDoc: React.PropTypes.func.isRequired,
-  fetchPublicDocs: React.PropTypes.func.isRequired,
+  fetchAllDocs: React.PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
   newDocuments: state.documents,
 });
 
 export default connect(mapStateToProps,
-{ createDoc, fetchPublicDocs })(AddModal);
+{ createDoc, fetchAllDocs })(AddModal);

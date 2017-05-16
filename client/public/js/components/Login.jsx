@@ -9,7 +9,7 @@ require('../../scss/style.scss');
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       email: '',
       password: '',
       errors: '',
@@ -35,13 +35,6 @@ class Login extends Component {
       this.setState({ errors: {}, isLoading: true });
       this.props.login(this.state).then(
         () => {
-          // console.log(response);
-          // window.localStorage.setItem('firstName', response.data.firstName);
-          // window.localStorage.setItem('lastName', response.data.lastName);
-          // window.localStorage.setItem('email', response.data.email);
-          // window.localStorage.setItem('token', response.data.token);
-          // window.localStorage.setItem('userId', response.data.id);
-          // window.localStorage.setItem('roleId', response.data.roleId);
           this.setState({ shouldRedirect: true });
         }
       ).catch(() => {
@@ -64,6 +57,10 @@ class Login extends Component {
     }
   }
 
+  /**
+   * @returns
+   * @memberOf Login
+   */
   render() {
     const { errors, email, password, isLoading } = this.state;
     return (
@@ -104,7 +101,8 @@ class Login extends Component {
               </div>
               <div className="row">
                 <button
-                  className="btn waves-effect waves-light offset-s3 col s6 blue darken-3"
+                  className="btn waves-effect
+                  waves-light offset-s3 col s6 blue darken-3"
                   type="submit"
                   name="action"
                   disabled={isLoading}

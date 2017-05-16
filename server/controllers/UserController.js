@@ -2,7 +2,7 @@ import database from '../models';
 import ResponseHandler from '../helpers/ResponseHandler';
 import Authenticator from '../middlewares/Authenticator';
 import ErrorHandler from '../helpers/ErrorHandler';
-// declare the usersDB
+
 const userDB = database.User;
 
 /**
@@ -19,7 +19,7 @@ class UserController {
    * @return {Object} - new User object containing fields
    * consider safe for public view
    */
-  static getSafeUserFields(user, token) {
+  static getUserFields(user, token) {
     return {
       id: user.id,
       email: user.email,
@@ -49,7 +49,7 @@ class UserController {
           201,
           Object.assign(
             {},
-            UserController.getSafeUserFields(user, token),
+            UserController.getUserFields(user, token),
             { roleId: user.roleId }
           )
         );
@@ -100,7 +100,7 @@ class UserController {
           ResponseHandler.sendResponse(
             response,
             200,
-            UserController.getSafeUserFields(updatedUser)
+            UserController.getUserFields(updatedUser)
           );
         })
         .catch((error) => {
@@ -110,6 +110,33 @@ class UserController {
         ResponseHandler.send404(response);
       }
     });
+  }
+
+  /**
+   * Search user Controller
+   * @static
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @return{Void} - returns void
+   * @memberOf DocumentController
+   */
+  static searchUser(request, response) {
+    if (request.query.q) {
+      userDB.User.find({ where: { email: { $like: request.query.q } } })
+       .then((foundUser) => {
+         if (foundUser) {
+           return ResponseHandler.sendResponse(
+             response,
+             302,
+             UserController.formatUserDetails(foundUser)
+            );
+         }
+       }).catch(err => ResponseHandler.sendResponse(
+           response,
+           404,
+           { status: false, message: err }
+         ));
+    }
   }
 
   /**
@@ -126,7 +153,7 @@ class UserController {
         ResponseHandler.sendResponse(
           response,
           200,
-          UserController.getSafeUserFields(user)
+          UserController.getUserFields(user)
         );
       } else {
         ResponseHandler.send404(response);
@@ -148,21 +175,19 @@ class UserController {
    */
   static fetchUsers(request, response) {
     const search = request.query.search;
-    const limit = request.query.limit;
+    const limit = request.query.limit || '10';
     const offset = request.query.offset;
     const page = request.query.page;
     const queryBuilder = {
+      limit,
       order: '"createdAt" DESC'
     };
-    if (limit) {
-      queryBuilder.limit = limit;
-    }
     if (offset) {
       queryBuilder.offset = offset;
     }
     if (page) {
       // override offset if a page is specified, and default limit is 10
-      const pageLimit = limit || 10;
+      const pageLimit = limit;
       queryBuilder.offset = (page * pageLimit) - pageLimit;
       queryBuilder.limit = pageLimit;
     }
@@ -182,8 +207,9 @@ class UserController {
           200,
           {
             users: users.rows
-              .map(user => UserController.getSafeUserFields(user)),
-            total: users.count
+              .map(user => UserController.getUserFields(user)),
+            total: users.count,
+            pages: Math.ceil(users.count / limit)
           }
         );
       } else {
@@ -298,7 +324,7 @@ class UserController {
         });
         const safeUser = Object.assign(
           {},
-          UserController.getSafeUserFields(user),
+          UserController.getUserFields(user),
           { documents });
         ResponseHandler.sendResponse(
           response,

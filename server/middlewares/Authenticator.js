@@ -97,7 +97,11 @@ class Authenticator {
    */
   static generateToken(user) {
     return jwt.sign({
-      userId: user.id
+      userId: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      roleId: user.roleId
     },
     SECRET_KEY,
     { expiresIn: '2 days' });

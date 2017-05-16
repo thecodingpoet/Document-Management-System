@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import About from './About.jsx'; 
+import React from 'react';
+import About from './About.jsx';
 import banner from '../../images/Banner3.jpg';
 
 

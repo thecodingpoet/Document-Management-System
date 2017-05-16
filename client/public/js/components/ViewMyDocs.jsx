@@ -22,7 +22,7 @@ class ViewMyDocuments extends Component {
 ViewMyDocuments.propTypes = {
   fetchAllDocs: React.PropTypes.func.isRequired,
   docs: React.PropTypes.array.isRequired,
-  documentSelected: React.Object.isRequired,
+  // documentSelected: React.Object.isRequired,
 };
 
 function mapStateToProps(state) {

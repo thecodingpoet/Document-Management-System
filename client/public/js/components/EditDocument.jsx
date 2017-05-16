@@ -202,7 +202,7 @@ class EditDocument extends Component {
 
 EditDocument.propTypes = {
   editDoc: React.PropTypes.func.isRequired,
-  testDoc: React.PropTypes.Object.isRequired,
+  // testDoc: React.PropTypes.Object.isRequired,
   fetchAllDocs: React.PropTypes.func.isRequired
 };
 

@@ -170,13 +170,11 @@
 	margin-top: 50px;
 	margin-bottom: 50px
 }
-// label focus colour
+
 .input-field input[type=text]:focus + label {
 	color: #1565c0;
 }
 
-// label underline focus colour
-   /* label underline focus color */
 .input-field input[type=text]:focus {
 	border-bottom: 1px solid #000;
 	box-shadow: 0 1px 0 0 #000;
@@ -224,12 +222,13 @@
 	min-height: calc(100vh - 70px);
 }
 
-.docContent {
-  width: 250px;
+.docContent > p {
+  width: 110px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 #footerText{
 	color: #424242;
 }

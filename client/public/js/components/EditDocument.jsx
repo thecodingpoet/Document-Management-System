@@ -48,13 +48,13 @@ class EditDocument extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(nextProps) {
-    if (nextProps, nextProps.testDoc.hasOwnProperty('access')) {
+    if (nextProps, nextProps.currentDocument.hasOwnProperty('access')) {
       this.setState({
-        title: nextProps.testDoc.title,
-        content: nextProps.testDoc.content,
-        access: nextProps.testDoc.access
+        title: nextProps.currentDocument.title,
+        content: nextProps.currentDocument.content,
+        access: nextProps.currentDocument.access
       });
-      tinymce.activeEditor.setContent(nextProps.testDoc.content);
+      tinymce.activeEditor.setContent(nextProps.currentDocument.content);
     }
   }
 
@@ -85,7 +85,7 @@ class EditDocument extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
-    this.props.editDoc(this.state, this.props.testDoc.id, 'DocumentId')
+    this.props.editDoc(this.state, this.props.currentDocument.id, 'DocumentId')
     .then(() => {
       this.props.fetchAllDocs();
       $('#editDoc').modal('close');
@@ -182,8 +182,7 @@ class EditDocument extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action modal-close
-                   waves-effect waves-green btn-flat"
+                  className="modal-action modal-close waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
                   type="submit"
@@ -202,8 +201,8 @@ class EditDocument extends Component {
 
 EditDocument.propTypes = {
   editDoc: React.PropTypes.func.isRequired,
-  // testDoc: React.PropTypes.Object.isRequired,
-  fetchAllDocs: React.PropTypes.func.isRequired
+  fetchAllDocs: React.PropTypes.func.isRequired,
+  currentDocument: React.PropTypes.array.isRequired
 };
 
 /**

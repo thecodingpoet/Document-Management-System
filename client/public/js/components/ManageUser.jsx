@@ -1,27 +1,43 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import ReactDOM from 'react-dom';
 import { Pagination } from 'react-materialize';
 import { getAllUsers, deleteUser } from '../actions/users';
+import DeleteIcon from '../../images/admin_delete.png';
 
-require('../../scss/style.scss');
-
-
-
+/**
+ * @class ManageUser
+ * @extends {Component}
+ */
 class ManageUser extends Component {
 
+  /**
+   * Creates an instance of ManageUser.
+   * @param {any} props - props
+   * @memberOf ManageUser
+   */
   constructor(props) {
     super(props);
     this.confirmDeletion = this.confirmDeletion.bind(this);
-    this.state = {
-      activePage: 15
-    };
   }
 
+  /**
+   * This method gets called before the initial render
+   * @memberOf ManageUser
+   * @returns {void}
+   */
   componentDidMount() {
     this.props.getAllUsers();
   }
 
+  /**
+   * @param {any} callback - functon that gets called
+   * for a sussessful response
+   * @param {any} documentId
+   * @returns {void}
+   * @memberOf ManageUser
+   */
   confirmDeletion(callback, documentId) {
     swal({
       title: 'Are you sure?',
@@ -44,12 +60,11 @@ class ManageUser extends Component {
   }
 
   /**
-   * @returns
+   * @returns {jsx} - Manage User Page
    * @memberOf ManageUser
    */
   render() {
     let usersList = [];
-    console.log(this.props);
     if (this.props.users.users !== undefined) {
       usersList = this.props.users.users;
     }
@@ -86,13 +101,24 @@ class ManageUser extends Component {
                   <td>{user.email}</td>
                   <td>{user.roleId === 1 ? 'Admin' : 'Regular' }</td>
                   <td>
-                    <a
-                      href="#!"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        return this.confirmDeletion(this.props.deleteUser, user.id);
-                      }
-                    } ><img src={require('../../images/admin_delete.png')} alt="delete user logo" id="deleteIcon" /></a></td>
+                    {user.roleId !== 1
+                    ?
+                      <a
+                        href="#!"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          return this
+                        .confirmDeletion(this.props.deleteUser, user.id);
+                        }
+                    }
+                      ><img
+                        src={DeleteIcon}
+                        alt="delete user logo"
+                        id="deleteIcon"
+                      />
+                      </a> : ''}</td>
+
+
                 </tr>
                 ))
             }
@@ -103,6 +129,10 @@ class ManageUser extends Component {
   }
 }
 
+/**
+ * @param {any} state - state
+ * @returns {jsx} - manage user
+ */
 function mapStateToProps(state) {
   return {
     users: state.users
@@ -115,4 +145,5 @@ ManageUser.propTypes = {
   deleteUser: React.PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { getAllUsers, deleteUser })(ManageUser);
+export default connect(mapStateToProps,
+{ getAllUsers, deleteUser })(ManageUser);

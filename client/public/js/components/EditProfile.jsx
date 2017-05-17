@@ -1,11 +1,9 @@
 /* eslint-disable no-undef */
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import validateInput from '../validations/signup';
 import { editProfile } from '../actions/editProfile';
-
 /**
  * @class EditModal
  * @extends {Component}
@@ -163,8 +161,7 @@ class EditModal extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action
-                  modal-close waves-effect waves-green btn-flat"
+                  className="modal-action modal-close waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
                   type="submit"

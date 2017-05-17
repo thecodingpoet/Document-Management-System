@@ -1,12 +1,21 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import validateInput from '../validations/login';
 import { login } from '../actions/login';
 
-require('../../scss/style.scss');
-
+/**
+ * @class Login
+ * @extends {Component}
+ */
 class Login extends Component {
+  /**
+   * Creates an instance of Login.
+   * @param {any} props
+   * @memberOf Login
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,16 +28,13 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
 
-    if (!isValid) {
-      this.setState({ errors });
-    }
 
-    return isValid;
-  }
-
+  /**
+   * @param {any} event
+   * @returns {void}
+   * @memberOf Login
+   */
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -44,21 +50,40 @@ class Login extends Component {
     }
   }
 
-  onChange(e) {
-    if (!!this.state.errors[e.target.name]) {
+  /**
+   * @param {any} event - event
+   * @returns {void}
+   * @memberOf Login
+   */
+  onChange(event) {
+    if (!!this.state.errors[event.target.name]) {
       const errors = Object.assign({}, this.state.errors);
-      delete errors[e.target.name];
+      delete errors[event.target.name];
       this.setState({
-        [e.target.name]: e.target.value,
+        [event.target.name]: event.target.value,
         errors
       });
     } else {
-      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ [event.target.name]: event.target.value });
     }
   }
 
   /**
-   * @returns
+   * @returns {Boolean} - True if valid. False otherwise
+   * @memberOf Login
+   */
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
+  /**
+   * @returns {jsx} - Login Page
    * @memberOf Login
    */
   render() {
@@ -101,8 +126,7 @@ class Login extends Component {
               </div>
               <div className="row">
                 <button
-                  className="btn waves-effect
-                  waves-light offset-s3 col s6 blue darken-3"
+                  className="btn waves-effect waves-light offset-s3 col s6 blue darken-3"
                   type="submit"
                   name="action"
                   disabled={isLoading}

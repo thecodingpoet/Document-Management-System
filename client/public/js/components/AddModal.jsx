@@ -54,9 +54,12 @@ class AddModal extends Component {
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
+      const cloneState = Object.assign({}, this.state);
       this.setState({ errors: {}, isLoading: true });
-      this.props.createDoc(this.state)
+      this.props.createDoc(cloneState)
       .then(() => {
+        this.setState({ title: '', content: '', isLoading: false });
+        tinyMCE.activeEditor.setContent('');
         Materialize.toast('Document Created', 4000, 'green');
         this.props.fetchAllDocs();
         $('#modal1').modal('close');
@@ -193,8 +196,7 @@ class AddModal extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action modal-close
-                  waves-effect waves-green btn-flat"
+                  className="modal-action modal-close waves-effect waves-green btn-flat"
                 >Cancel</a>
                 <input
                   id="createBtn"

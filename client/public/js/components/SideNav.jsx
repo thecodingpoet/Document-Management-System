@@ -7,9 +7,7 @@ import jwtDecode from 'jwt-decode';
 import Avatar from 'react-avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { logout } from '../actions/logout';
-import sideNavImage from '../../images/rain.jpg';
-
-require('../../scss/style.scss');
+import sideNavImage from '../../images/reds.jpeg';
 
 injectTapEventPlugin();
 

@@ -4,6 +4,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllDocs } from '../actions/documents';
 
+/**
+ * @class FullDocument
+ * @extends {Component}
+ */
 class FullDocument extends Component {
   /**
    * @returns {void}
@@ -45,9 +49,14 @@ class FullDocument extends Component {
 
 FullDocument.propTypes = {
   fetchAllDocs: React.PropTypes.func.isRequired,
-  docs: React.PropTypes.array.isRequired
+  docs: React.PropTypes.array.isRequired,
+  match: React.PropTypes.object.isRequired
 };
 
+/**
+ * @param {any} state - state
+ * @returns {void}
+ */
 function mapStateToProps(state) {
   return {
     docs: state.documents

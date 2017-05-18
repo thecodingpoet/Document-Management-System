@@ -1,12 +1,21 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { userSignUpRequest } from '../actions/signup';
 import validateInput from '../validations/signup';
 
-require('../../scss/style.scss');
-
+/**
+ * @class Signup
+ * @extends {Component}
+ */
 class Signup extends Component {
+  /**
+   * Creates an instance of Signup.
+   * @param {any} props - props
+   * @memberOf Signup
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +30,46 @@ class Signup extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * @param {any} event - event
+   * @returns {void}
+   * @memberOf Signup
+   */
+  onChange(event) {
+    if (!!this.state.errors[event.target.name]) {
+      const errors = Object.assign({}, this.state.errors);
+      delete errors[event.target.name];
+      this.setState({
+        [event.target.name]: event.target.value,
+        errors
+      });
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
+  }
+
+  /**
+   * @param {any} event - event
+   * @returns {void}
+   * @memberOf Signup
+   */
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.userSignUpRequest(this.state).then(() => {
+        this.setState({ shouldRedirect: true });
+      }).catch((err) => {
+        Materialize.toast(err.response.data[0].message, 4000, 'red');
+        this.setState({ isLoading: false });
+      });
+    }
+  }
+
+  /**
+   * @returns {Boolean} - True if valid. False otherwise
+   * @memberOf Signup
+   */
   isValid() {
     const { errors, isValid } = validateInput(this.state);
 
@@ -31,46 +80,21 @@ class Signup extends Component {
     return isValid;
   }
 
-  onChange(e) {
-    if (!!this.state.errors[e.target.name]) {
-      const errors = Object.assign({}, this.state.errors);
-      delete errors[e.target.name];
-      this.setState({
-        [e.target.name]: e.target.value,
-        errors
-      });
-    } else {
-      this.setState({ [e.target.name]: e.target.value });
-    }
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.userSignUpRequest(this.state).then(() => {
-        // window.localStorage.setItem('firstName', response.data.firstName);
-        // window.localStorage.setItem('lastName', response.data.lastName);
-        // window.localStorage.setItem('email', response.data.email);
-        // window.localStorage.setItem('token', response.data.token);
-        // window.localStorage.setItem('userId', response.data.id);
-        this.setState({ shouldRedirect: true });
-      }).catch(() => {
-        Materialize.toast('This Email Address is already taken', 4000, 'red');
-        this.setState({ isLoading: false });
-      });
-    }
-  }
-
+  /**
+   * @returns { jsx } - Signup Page
+   * @memberOf Signup
+   */
   render() {
-    const { errors, email, password, firstName, lastName, isLoading } = this.state;
+    const { errors, email, password, firstName, lastName, isLoading }
+    = this.state;
     return (
       this.state.shouldRedirect ?
         <Redirect to={'/dashboard'} /> :
         <div className="container row divBox" id="signUpBox" >
+          <h4 className="center-align"><b>Create Your Account</b></h4>
           <form action="" onSubmit={this.onSubmit} className="col s12">
             <div className="row">
-              <div className="input-field offset-s3 col s6">
+              <div className="input-field offset-s2 col s8">
                 <input
                   id="firstName"
                   type="text"
@@ -85,7 +109,7 @@ class Signup extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="input-field offset-s3 col s6">
+              <div className="input-field offset-s2 col s8">
                 <input
                   id="lastName"
                   type="text"
@@ -100,7 +124,7 @@ class Signup extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="input-field offset-s3 col s6">
+              <div className="input-field offset-s2 col s8">
                 <input
                   id="email"
                   type="email"
@@ -115,7 +139,7 @@ class Signup extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="input-field offset-s3 col s6">
+              <div className="input-field offset-s2 col s8">
                 <input
                   id="password"
                   type="password"
@@ -131,7 +155,7 @@ class Signup extends Component {
             </div>
             <div className="row">
               <button
-                className="btn waves-effect waves-light offset-s3 col s6 blue darken-3"
+                className="btn waves-effect waves-light offset-s2 col s8 blue darken-3" //eslint-disable-line
                 type="submit"
                 name="action"
                 disabled={isLoading}

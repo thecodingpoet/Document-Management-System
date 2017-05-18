@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/logout';
 
-
-
 /**
  * @export
  * @class Nav

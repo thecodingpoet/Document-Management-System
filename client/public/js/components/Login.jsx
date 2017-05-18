@@ -28,8 +28,6 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-
-
   /**
    * @param {any} event
    * @returns {void}
@@ -44,7 +42,7 @@ class Login extends Component {
           this.setState({ shouldRedirect: true });
         }
       ).catch(() => {
-        Materialize.toast('Incorrect Username or password', 4000, 'red');
+        Materialize.toast('Invalid email or password', 4000, 'red');
         this.setState({ isLoading: false });
       });
     }
@@ -93,9 +91,10 @@ class Login extends Component {
         <Redirect exactly to={'/dashboard'} /> :
         <div>
           <form onSubmit={this.onSubmit}>
-            <div className="container divBox" id="loginBox">
+            <div className="loginContainer divBox" id="loginBox">
+              <h4 className="center-align"><b>Welcome Back</b></h4>
               <div className="row">
-                <div className="input-field offset-s3 col s6">
+                <div className="input-field offset-s2 col s8">
                   <input
                     id="email"
                     type="email"
@@ -110,7 +109,7 @@ class Login extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="input-field offset-s3 col s6">
+                <div className="input-field offset-s2 col s8">
                   <input
                     id="password"
                     type="password"
@@ -126,7 +125,7 @@ class Login extends Component {
               </div>
               <div className="row">
                 <button
-                  className="btn waves-effect waves-light offset-s3 col s6 blue darken-3"
+                  className="btn waves-effect waves-light offset-s2 col s8 blue darken-3" //eslint-disable-line
                   type="submit"
                   name="action"
                   disabled={isLoading}

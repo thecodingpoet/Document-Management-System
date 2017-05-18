@@ -103,12 +103,12 @@ class EditModal extends Component {
                 <input
                   id="firstName"
                   type="text"
-                  className="validate"
+                  className="validate firstName"
                   name="firstName"
                   value={firstName}
                   onChange={this.onChange}
                 />
-                <label htmlFor="firstName">First Name</label>
+                <label className="active" htmlFor="firstName">First Name</label>
                 {errors.firstName &&
                   <span className="errorMsg">{errors.firstName}</span>}
               </div>
@@ -123,7 +123,7 @@ class EditModal extends Component {
                   value={lastName}
                   onChange={this.onChange}
                 />
-                <label htmlFor="lastName">Last Name</label>
+                <label className="active" htmlFor="lastName">Last Name</label>
                 {errors.lastName &&
                   <span className="errorMsg">{errors.lastName}</span>}
               </div>
@@ -138,7 +138,7 @@ class EditModal extends Component {
                   value={email}
                   onChange={this.onChange}
                 />
-                <label htmlFor="email">Email</label>
+                <label className="active" htmlFor="email">Email</label>
                 {errors.email &&
                   <span className="errorMsg">{errors.email}</span>}
               </div>
@@ -153,7 +153,7 @@ class EditModal extends Component {
                   value={password}
                   onChange={this.onChange}
                 />
-                <label htmlFor="password">Password</label>
+                <label className="active" htmlFor="password">Password</label>
                 {errors.password &&
                   <span className="errorMsg">{errors.password}</span>}
               </div>
@@ -161,11 +161,12 @@ class EditModal extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action modal-close waves-effect waves-green btn-flat"
+                  className="modal-action modal-close waves-effect waves-green btn-flat" //eslint-disable-line
                 >Cancel</a>
                 <input
+                  id="edit-profile-btn"
                   type="submit"
-                  className="modal-action waves-effect waves-green btn-flat"
+                  className="edit-profile-btn modal-action waves-effect waves-green btn-flat" //eslint-disable-line
                   value="Submit"
                   onClick={this.onSubmit}
                 />

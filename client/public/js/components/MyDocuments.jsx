@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AddModal from './AddModal.jsx';
-import EditProfile from './EditProfile.jsx';
-import AddBtn from './AddButton.jsx';
-import ViewMyDocs from './ViewMyDocs.jsx';
-import EditDocument from './EditDocument.jsx';
+import AddModal from './AddModal.jsx'; //eslint-disable-line
+import EditProfile from './EditProfile.jsx'; //eslint-disable-line
+import AddBtn from './AddButton.jsx'; //eslint-disable-line
+import ViewMyDocuments from './ViewMyDocuments.jsx'; //eslint-disable-line
+import EditDocument from './EditDocument.jsx'; //eslint-disable-line
 
 /**
  * @class MyDocuments
@@ -55,9 +55,12 @@ class MyDocuments extends Component {
       <div className="row">
         <AddModal />
         <EditProfile />
-        <EditDocument testDoc={this.state.document} />
+        <EditDocument actualDocument={this.state.document} />
 
-        <ViewMyDocs documentSelected={this.documentSelected} user={this.user} />
+        <ViewMyDocuments
+          documentSelected={this.documentSelected}
+          user={this.user}
+        />
         <AddBtn />
 
       </div>

@@ -43,7 +43,7 @@ export default class DocumentCard extends React.Component {
               <span className="card-title"><b>{doc.title}</b></span>
               <p
                 className="docContent" id="content" style={{ color: 'black' }}
-                dangerouslySetInnerHTML={{ __html: doc.content }} 
+                dangerouslySetInnerHTML={{ __html: doc.content }}
               />
             </div>
           </div>

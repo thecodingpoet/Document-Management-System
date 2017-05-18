@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PublicDocs from './PublicDocuments.jsx';
 import PrivateDocs from './PrivateDocuments.jsx';
 import RoleDocs from './RoleDocuments.jsx';

@@ -12,6 +12,7 @@ import MyDocuments from './MyDocuments.jsx';
 import FullDocument from './FullDocument.jsx';
 import Search from './Search.jsx';
 import ManageUser from './ManageUser.jsx';
+import EditProfile from './EditProfile.jsx';
 
 require('../../scss/style.scss');
 
@@ -44,6 +45,7 @@ export default class App extends Component {
                   <Route path="/document/:id" component={FullDocument} />
                   <Route path="/search" component={Search} />
                   <Route path="/manage" component={ManageUser} />
+                  <Route path="/profile" component={EditProfile} />
                 </Switch>
               </div>
               <Footer />

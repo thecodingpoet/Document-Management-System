@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import EditProfile from './EditProfile.jsx';
 import DocumentCard from './DocumentCard.jsx';
 import { fetchAllDocs } from '../actions/documents';
 import searchImage from '../../images/search.png';
@@ -133,7 +132,6 @@ class Search extends Component {
         <div>
           { documentsFound.length === 0 ? emptyDiv : docsList }
         </div>
-        <EditProfile />
       </div>
     );
   }

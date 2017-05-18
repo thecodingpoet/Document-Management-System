@@ -6,9 +6,8 @@ import SelectField from 'material-ui/SelectField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
-import { createDoc } from '../actions/documents';
+import { createDoc, fetchAllDocs } from '../actions/documents';
 import validateInput from '../validations/documents';
-import { fetchAllDocs } from '../actions/documents';
 
 /**
  * @class AddModal

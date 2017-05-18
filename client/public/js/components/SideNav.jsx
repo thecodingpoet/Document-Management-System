@@ -121,13 +121,13 @@ class MySideNav extends Component {
           : ''
         }
         <li>
-          <a
+          <Link
             className="waves-effect"
             onClick={this.closeSideNav}
-            href="#editModal"
+            to="/profile"
           >
             <i className="material-icons">mode_edit</i>Edit Profile
-            </a>
+            </Link>
         </li>
       </ul>
 

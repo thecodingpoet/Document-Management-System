@@ -1,4 +1,4 @@
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+// import configureStore from 'redux-mock-store';
+// import { Provider } from 'react-redux';
 
-const mockStore = configureStore();
+// const mockStore = configureStore();

@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import AddModal from './AddModal.jsx';
-import EditProfile from './EditProfile.jsx';
 import AddBtn from './AddButton.jsx';
 import ViewDocuments from './ViewDocuments.jsx';
 
@@ -30,7 +29,6 @@ class Dashboard extends Component {
     return (
       <div className="row">
         <AddModal />
-        <EditProfile />
         <ViewDocuments />
         <AddBtn />
       </div>

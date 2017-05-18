@@ -1,12 +1,21 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import validateInput from '../validations/login';
 import { login } from '../actions/login';
 
-require('../../scss/style.scss');
-
+/**
+ * @class Login
+ * @extends {Component}
+ */
 class Login extends Component {
+  /**
+   * Creates an instance of Login.
+   * @param {any} props
+   * @memberOf Login
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +28,48 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  /**
+   * @param {any} event
+   * @returns {void}
+   * @memberOf Login
+   */
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.login(this.state).then(
+        () => {
+          this.setState({ shouldRedirect: true });
+        }
+      ).catch(() => {
+        Materialize.toast('Invalid email or password', 4000, 'red');
+        this.setState({ isLoading: false });
+      });
+    }
+  }
+
+  /**
+   * @param {any} event - event
+   * @returns {void}
+   * @memberOf Login
+   */
+  onChange(event) {
+    if (!!this.state.errors[event.target.name]) {
+      const errors = Object.assign({}, this.state.errors);
+      delete errors[event.target.name];
+      this.setState({
+        [event.target.name]: event.target.value,
+        errors
+      });
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
+  }
+
+  /**
+   * @returns {Boolean} - True if valid. False otherwise
+   * @memberOf Login
+   */
   isValid() {
     const { errors, isValid } = validateInput(this.state);
 
@@ -29,36 +80,8 @@ class Login extends Component {
     return isValid;
   }
 
-  onSubmit(event) {
-    event.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.login(this.state).then(
-        () => {
-          this.setState({ shouldRedirect: true });
-        }
-      ).catch(() => {
-        Materialize.toast('Incorrect Username or password', 4000, 'red');
-        this.setState({ isLoading: false });
-      });
-    }
-  }
-
-  onChange(e) {
-    if (!!this.state.errors[e.target.name]) {
-      const errors = Object.assign({}, this.state.errors);
-      delete errors[e.target.name];
-      this.setState({
-        [e.target.name]: e.target.value,
-        errors
-      });
-    } else {
-      this.setState({ [e.target.name]: e.target.value });
-    }
-  }
-
   /**
-   * @returns
+   * @returns {jsx} - Login Page
    * @memberOf Login
    */
   render() {
@@ -68,9 +91,10 @@ class Login extends Component {
         <Redirect exactly to={'/dashboard'} /> :
         <div>
           <form onSubmit={this.onSubmit}>
-            <div className="container divBox" id="loginBox">
+            <div className="loginContainer divBox" id="loginBox">
+              <h4 className="center-align"><b>Welcome Back</b></h4>
               <div className="row">
-                <div className="input-field offset-s3 col s6">
+                <div className="input-field offset-s2 col s8">
                   <input
                     id="email"
                     type="email"
@@ -85,7 +109,7 @@ class Login extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="input-field offset-s3 col s6">
+                <div className="input-field offset-s2 col s8">
                   <input
                     id="password"
                     type="password"
@@ -101,8 +125,7 @@ class Login extends Component {
               </div>
               <div className="row">
                 <button
-                  className="btn waves-effect
-                  waves-light offset-s3 col s6 blue darken-3"
+                  className="btn waves-effect waves-light offset-s2 col s8 blue darken-3" //eslint-disable-line
                   type="submit"
                   name="action"
                   disabled={isLoading}

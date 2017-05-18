@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -5,13 +7,21 @@ import jwtDecode from 'jwt-decode';
 import Avatar from 'react-avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { logout } from '../actions/logout';
-
-require('../../scss/style.scss');
+import sideNavImage from '../../images/reds.jpeg';
 
 injectTapEventPlugin();
 
+/**
+ * @class MySideNav
+ * @extends {Component}
+ */
 class MySideNav extends Component {
 
+  /**
+   * Creates an instance of MySideNav.
+   * @param {any} props - props
+   * @memberOf MySideNav
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -29,87 +39,110 @@ class MySideNav extends Component {
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.search = this.search.bind(this);
-    this.logout = this.logout.bind(this);
   }
 
+  /**
+   * @returns {void}
+   * @memberOf MySideNav
+   */
   componentDidMount() {
     $('.button-collapse').sideNav();
   }
 
+  /**
+   * @returns {void}
+   * @memberOf MySideNav
+   */
   handleToggle() {
     this.setState({ open: !this.state.open });
   }
 
+  /**
+   * @returns {void}
+   * @memberOf MySideNav
+   */
   handleClose() {
     this.setState({ open: false });
   }
 
+  /**
+   * @returns {void}
+   * @memberOf MySideNav
+   */
   closeSideNav() {
     $('.button-collapse').sideNav('hide');
   }
 
-  logout(event) {
-    event.preventDefault();
-    this.props.logout();
-    this.setState({ redirectTo: '/' });
-  }
-
-  search(event) {
-    if (event.key === 'Enter') {
-      this.setState({ fireRedirect: true });
-    }
-  }
-
+  /**
+   * @returns {jsx} - Side Nav
+   * @memberOf MySideNav
+   */
   render() {
     return (
-      <div>
-        <nav>
-          <div className="nav-wrapper grey darken-4">
-
-            <li className="brand-logo">
-              <img src={require('../../images/menu_icon.png')} data-activates="slide-out" className="button-collapse" alt="logo" id="menu_icon" onClick={this.handleToggle} />
-            </li>
-            <span id="side_title">
-              Document Management System
-            </span>
-
-            <ul className="right hide-on-med-and-down">
-              <li onClick={this.logout}><Link to="/">logout</Link></li>
-            </ul>
+      <ul id="slide-out" className="side-nav fixed">
+        <li><div className="userView">
+          <div className="background">
+            <img src={sideNavImage} alt="Background" id="sideNavImage" />
           </div>
-        </nav>
-        <ul id="slide-out" className="side-nav">
-          <li><div className="userView">
-            <div className="background">
-              <img src={require('../../images/sidenav.jpg')} />
-            </div>
-            <div id="avatar">
-              <Avatar name={this.name} color="#b71c1c" round />
-            </div>
-            <span className="white-text name">{this.name}</span>
-            <span className="white-text email">{this.email}</span>
-          </div></li>
-          <li><Link to="/dashboard" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">dashboard</i>Dashboard</Link></li>
-          <li><Link to="/document" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">work</i>My Documents</Link></li>
-          <li><Link to="/search" onClick={this.closeSideNav} className="waves-effect" href="#!"><i className="material-icons">search</i>Search Documents</Link></li>
-          { Number(this.roleId) === 1
-            ? <li ><Link to="manage" className="waves-effect" onClick={this.closeSideNav} href="#!"><i className="material-icons">supervisor_account</i>Manage User</Link></li>
-            : ''
-          }
-          <li><a className="waves-effect" onClick={this.closeSideNav} href="#editModal"><i className="material-icons">mode_edit</i>Edit Profile</a></li>
-        </ul>
-      </div>
+          <div id="avatar">
+            <Avatar name={this.name} color="#b71c1c" round />
+          </div>
+          <span className="white-text name">{this.name}</span>
+          <span className="white-text email">{this.email}</span>
+        </div></li>
+        <li><Link
+          to="/dashboard"
+          onClick={this.closeSideNav}
+          className="waves-effect" href="#!"
+        ><i className="material-icons">dashboard</i>Dashboard</Link>
+        </li>
+        <li><Link
+          to="/document"
+          onClick={this.closeSideNav}
+          className="waves-effect" href="#!"
+        >
+          <i className="material-icons">work</i>My Documents</Link>
+        </li>
+        <li><Link
+          to="/search"
+          onClick={this.closeSideNav}
+          className="waves-effect" href="#!"
+        ><i className="material-icons">search</i>Search Documents</Link>
+        </li>
+        { Number(this.roleId) === 1
+          ? <li ><Link
+            to="manage"
+            className="waves-effect"
+            onClick={this.closeSideNav} href="#!"
+          >
+            <i className="material-icons">supervisor_account</i>Manage User
+            </Link>
+          </li>
+          : ''
+        }
+        <li>
+          <Link
+            className="waves-effect"
+            onClick={this.closeSideNav}
+            to="/profile"
+          >
+            <i className="material-icons">mode_edit</i>Edit Profile
+            </Link>
+        </li>
+      </ul>
 
     );
   }
 }
 
 MySideNav.propTypes = {
-  logout: React.PropTypes.func.isRequired,
-  user: React.PropTypes.object.isRequired
+  logout: React.PropTypes.func.isRequired
 };
 
+/**
+ * @param {any} state - state
+ * @returns {Object} - users data
+ */
 function mapStateToProps(state) {
   return {
     user: state.auth

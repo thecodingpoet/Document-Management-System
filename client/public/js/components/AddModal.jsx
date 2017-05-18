@@ -1,15 +1,25 @@
+/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SelectField from 'material-ui/SelectField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
-import { createDoc } from '../actions/documents';
+import { createDoc, fetchAllDocs } from '../actions/documents';
 import validateInput from '../validations/documents';
-import { fetchAllDocs } from '../actions/documents';
 
+/**
+ * @class AddModal
+ * @extends {Component}
+ */
 class AddModal extends Component {
 
+  /**
+   * Creates an instance of AddModal.
+   * @param {any} props - props
+   * @memberOf AddModal
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -26,28 +36,29 @@ class AddModal extends Component {
     this.onDropdownChange = this.onDropdownChange.bind(this);
   }
 
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-
-    if (!isValid) {
-      this.setState({ errors });
-    }
-
-    return isValid;
-  }
-
+  /**
+   * @returns { void }
+   * @memberOf AddModal
+   */
   componentDidMount() {
     $('select').material_select();
   }
 
+  /**
+   * This function gets called when the submit button is clicked
+   * @param {any} event - event
+   * @memberOf AddModal
+   * @returns {void}
+   */
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
+      const cloneState = Object.assign({}, this.state);
       this.setState({ errors: {}, isLoading: true });
-      debugger;
-      this.props.createDoc(this.state)
+      this.props.createDoc(cloneState)
       .then(() => {
-        debugger;
+        this.setState({ title: '', content: '', isLoading: false });
+        tinyMCE.activeEditor.setContent('');
         Materialize.toast('Document Created', 4000, 'green');
         this.props.fetchAllDocs();
         $('#modal1').modal('close');
@@ -55,6 +66,11 @@ class AddModal extends Component {
     }
   }
 
+  /**
+   * @param {any} event - event
+   * @memberOf AddModal
+   * @returns {void}
+   */
   onChange(event) {
     if (!!this.state.errors[event.target.name]) {
       const errors = Object.assign({}, this.state.errors);
@@ -68,10 +84,43 @@ class AddModal extends Component {
     }
   }
 
+  /**
+   * @param {any} event - event
+   * @param {any} index - index of the dropdown
+   * @param {any} value - value of the dropdown
+   * @memberOf AddModal
+   * @returns {void}
+   */
   onDropdownChange(event, index, value) {
     this.setState({ access: value });
   }
 
+  /**
+   * @param {any} event - event
+   * @memberOf AddModal
+   * @returns {void}
+   */
+
+  /**
+   * @returns { Boolean } - True if valid. False Otherwise
+   * @memberOf AddModal
+   */
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
+  /**
+   * Handles editor onchange event
+   * @param {any} event - event
+   * @memberOf AddModal
+   * @returns {void}
+   */
   handleEditorChange(event) {
     if (!!this.state.errors.content) {
       delete this.state.errors.content;
@@ -85,6 +134,10 @@ class AddModal extends Component {
     }
   }
 
+  /**
+   * @returns {jsx} - Add Modal Component
+   * @memberOf AddModal
+   */
   render() {
     const { errors, title, content, isLoading } = this.state;
     return (
@@ -114,7 +167,8 @@ class AddModal extends Component {
                   content={content}
                   config={{
                     plugins: 'autolink link image lists print preview',
-                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                    toolbar:
+                  'undo redo | bold italic | alignleft aligncenter alignright'
                   }}
                   onChange={this.handleEditorChange}
                 />

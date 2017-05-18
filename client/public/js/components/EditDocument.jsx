@@ -6,8 +6,7 @@ import SelectField from 'material-ui/SelectField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MenuItem from 'material-ui/MenuItem';
 import TinyMCE from 'react-tinymce';
-import { editDoc } from '../actions/documents';
-import { fetchAllDocs } from '../actions/documents';
+import { editDoc, fetchAllDocs } from '../actions/documents';
 
 /**
  * @class EditDocument
@@ -48,13 +47,17 @@ class EditDocument extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(nextProps) {
-    if (nextProps, nextProps.testDoc.hasOwnProperty('access')) {
-      this.setState({
-        title: nextProps.testDoc.title,
-        content: nextProps.testDoc.content,
-        access: nextProps.testDoc.access
-      });
-      tinymce.activeEditor.setContent(nextProps.testDoc.content);
+    try {
+      if (nextProps, nextProps.actualDocument.hasOwnProperty('access')) {
+        this.setState({
+          title: nextProps.actualDocument.title,
+          content: nextProps.actualDocument.content,
+          access: nextProps.actualDocument.access
+        });
+        tinymce.activeEditor.setContent(nextProps.actualDocument.content);
+      }
+    } catch (e) {
+      return false;
     }
   }
 
@@ -85,7 +88,7 @@ class EditDocument extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
-    this.props.editDoc(this.state, this.props.testDoc.id, 'DocumentId')
+    this.props.editDoc(this.state, this.props.actualDocument.id, 'DocumentId')
     .then(() => {
       this.props.fetchAllDocs();
       $('#editDoc').modal('close');
@@ -142,7 +145,7 @@ class EditDocument extends Component {
                   value={title}
                   onChange={this.onChange}
                 />
-                <label htmlFor="title">Title</label>
+                <label className="active" htmlFor="title">Title</label>
                 {errors.title &&
                   <span className="errorMsg">{errors.title}</span>}
               </div>
@@ -182,8 +185,7 @@ class EditDocument extends Component {
             <div className="row">
               <div className="modal-footer">
                 <a
-                  className="modal-action modal-close
-                   waves-effect waves-green btn-flat"
+                  className="modal-action modal-close waves-effect waves-green btn-flat" // eslint-disable-line
                 >Cancel</a>
                 <input
                   type="submit"
@@ -202,7 +204,7 @@ class EditDocument extends Component {
 
 EditDocument.propTypes = {
   editDoc: React.PropTypes.func.isRequired,
-  // testDoc: React.PropTypes.Object.isRequired,
+  actualDocument: React.PropTypes.array.isRequired,
   fetchAllDocs: React.PropTypes.func.isRequired
 };
 

@@ -19,10 +19,10 @@ describe('User Actions', () => {
         .reply(200, {
           body: {
             users: [{
-              firstName: 'awa',
-              lastName: 'awa',
-              email: 'awa',
-              password: 'awa' }]
+              firstName: 'tomi',
+              lastName: 'tomi',
+              email: 'tomi',
+              password: 'tomi' }]
           } });
 
       const expectedActions = [{ type: actions.GET_ALL_USERS,

@@ -167,7 +167,7 @@ class EditProfile extends Component {
                <input
                  id="edit-profile-btn"
                  type="submit"
-                className="btn waves-effect waves-light offset-s2 col s10 blue darken-3" //eslint-disable-line
+                className="btn waves-effect waves-light col s10 blue darken-3" //eslint-disable-line
                  value="Submit"
                  onClick={this.onSubmit}
                />

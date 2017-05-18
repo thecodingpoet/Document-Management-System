@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import jwtDecode from 'jwt-decode';
 import validateInput from '../validations/signup';
 import { editProfile } from '../actions/editProfile';
@@ -24,7 +25,8 @@ class EditProfile extends Component {
       email: this.user.email ? this.user.email : '',
       password: '',
       errors: '',
-      isLoading: false
+      isLoading: false,
+      shouldRedirect: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -63,7 +65,8 @@ class EditProfile extends Component {
         this.setState({
           firstName: user.firstName,
           lastName: user.lastName,
-          email: user.email
+          email: user.email,
+          shouldRedirect: true
         });
         Materialize.toast('User Updated', 4000, 'green');
         $('#EditProfile').modal('close');
@@ -94,82 +97,84 @@ class EditProfile extends Component {
   render() {
     const { errors, email, password, firstName, lastName } = this.state;
     return (
-      <div className="profile">
-        <h5 className="center-align"><b>Edit Profile</b></h5>
-        <form className="profileForm">
-          <div className="row">
-            <div className="input-field col s10">
-              <input
-                id="firstName"
-                type="text"
-                className="validate firstName"
-                name="firstName"
-                value={firstName}
-                onChange={this.onChange}
-              />
-              <label className="active" htmlFor="firstName">First Name</label>
-              {errors.firstName &&
-                <span className="errorMsg">{errors.firstName}</span>}
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s10">
-              <input
-                id="lastName"
-                type="text"
-                className="validate"
-                name="lastName"
-                value={lastName}
-                onChange={this.onChange}
-              />
-              <label className="active" htmlFor="lastName">Last Name</label>
-              {errors.lastName &&
-                <span className="errorMsg">{errors.lastName}</span>}
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s10">
-              <input
-                id="email"
-                type="email"
-                className="validate"
-                name="email"
-                value={email}
-                onChange={this.onChange}
-              />
-              <label className="active" htmlFor="email">Email</label>
-              {errors.email &&
-                <span className="errorMsg">{errors.email}</span>}
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s10">
-              <input
-                id="password"
-                type="password"
-                className="validate"
-                name="password"
-                value={password}
-                onChange={this.onChange}
-              />
-              <label className="active" htmlFor="password">Password</label>
-              {errors.password &&
-                <span className="errorMsg">{errors.password}</span>}
-            </div>
-          </div>
-          <div className="row">
-            <div className="modal-footer">
-              <input
-                id="edit-profile-btn"
-                type="submit"
-                className="btn waves-effect waves-light offset-s2 col s8 blue darken-3" //eslint-disable-line
-                value="Submit"
-                onClick={this.onSubmit}
-              />
-            </div>
-          </div>
-        </form>
-      </div>
+     this.state.shouldRedirect ?
+       <Redirect exactly to={'/dashboard'} /> :
+       <div className="profile">
+         <h5 className="center-align"><b>Edit Profile</b></h5>
+         <form className="profileForm">
+           <div className="row">
+             <div className="input-field col s10">
+               <input
+                 id="firstName"
+                 type="text"
+                 className="validate firstName"
+                 name="firstName"
+                 value={firstName}
+                 onChange={this.onChange}
+               />
+               <label className="active" htmlFor="firstName">First Name</label>
+               {errors.firstName &&
+               <span className="errorMsg">{errors.firstName}</span>}
+             </div>
+           </div>
+           <div className="row">
+             <div className="input-field col s10">
+               <input
+                 id="lastName"
+                 type="text"
+                 className="validate"
+                 name="lastName"
+                 value={lastName}
+                 onChange={this.onChange}
+               />
+               <label className="active" htmlFor="lastName">Last Name</label>
+               {errors.lastName &&
+               <span className="errorMsg">{errors.lastName}</span>}
+             </div>
+           </div>
+           <div className="row">
+             <div className="input-field col s10">
+               <input
+                 id="email"
+                 type="email"
+                 className="validate"
+                 name="email"
+                 value={email}
+                 onChange={this.onChange}
+               />
+               <label className="active" htmlFor="email">Email</label>
+               {errors.email &&
+               <span className="errorMsg">{errors.email}</span>}
+             </div>
+           </div>
+           <div className="row">
+             <div className="input-field col s10">
+               <input
+                 id="password"
+                 type="password"
+                 className="validate"
+                 name="password"
+                 value={password}
+                 onChange={this.onChange}
+               />
+               <label className="active" htmlFor="password">Password</label>
+               {errors.password &&
+               <span className="errorMsg">{errors.password}</span>}
+             </div>
+           </div>
+           <div className="row">
+             <div className="modal-footer">
+               <input
+                 id="edit-profile-btn"
+                 type="submit"
+                className="btn waves-effect waves-light offset-s2 col s10 blue darken-3" //eslint-disable-line
+                 value="Submit"
+                 onClick={this.onSubmit}
+               />
+             </div>
+           </div>
+         </form>
+       </div>
     );
   }
 }

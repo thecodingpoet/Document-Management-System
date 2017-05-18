@@ -112,6 +112,7 @@
     "undo:migrations": "sequelize db:migrate:undo:all",
     "mocha": "NODE_ENV=test mocha server/tests/**/*.spec.js --compilers js:babel-register",
     "start:dev": "nodemon server.js",
+    "e2e": "./node_modules/.bin/nightwatch --config nightwatch.js",
     "test": "npm run mocha",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
     "start": "webpack -p && babel-node server.js",

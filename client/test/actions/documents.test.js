@@ -12,7 +12,8 @@ describe('Document Actions', () => {
     nock.cleanAll();
   });
 
-  it('creates SET_DOCUMENTS and SET_PAGINATION when fetching documents has been done',
+  it(`creates SET_DOCUMENTS and SET_PAGINATION
+   when fetching documents has been done`,
   () => {
     nock('http://localhost.com/')
       .get('/documents')
@@ -21,12 +22,9 @@ describe('Document Actions', () => {
 
     const expectedActions = [{ type: actions.SET_DOCUMENTS,
       documents: [{ title: '', content: '', access: '' }] }];
-
-    // const store = mockStore({ auth: {}, documents: [],
-    // users: [], search: [], paginate: {}, user: [] });
     const store = mockStore({ documents: [], paginate: {} });
 
-    store.dispatch(actions.fetchPublicDocs())
+    store.dispatch(actions.fetchAllDocs())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -42,10 +40,10 @@ describe('Document Actions', () => {
             { title: 'title', content: 'content', access: 'public' } } });
 
     const expectedActions = [{ type: actions.CREATE_DOCUMENTS,
-      document: { title: 'title', content: 'content', access: 'public' } }];
-
-    // const store = mockStore({ auth: {}, documents: [],
-    // users: [], search: [], paginate: {}, user: [] });
+      document: {
+        title: 'title',
+        content: 'content',
+        access: 'public' } }];
     const store = mockStore({ documents: [] });
 
     store.dispatch(actions.createDoc())

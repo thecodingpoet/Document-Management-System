@@ -26,7 +26,6 @@ describe('<DocumentCard />', () => {
 
   it('should set the content based on information from props', () => {
     const wrapper = shallow(<DocumentCard {...props} />);
-    console.log();
     expect(wrapper.find('.docContent').props().dangerouslySetInnerHTML.__html).to.eql('one new doc');
   });
 });

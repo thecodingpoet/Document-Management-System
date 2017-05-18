@@ -62,7 +62,6 @@ class EditProfile extends Component {
       this.setState({ errors: {}, isLoading: true });
       this.props.editProfile(this.state, userId).then((data) => {
         const user = data.user.data;
-        console.log(user);
         this.setState({
           firstName: user.firstName,
           lastName: user.lastName,

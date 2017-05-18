@@ -24,7 +24,7 @@ export default class RoleMiddleware {
     } else if (request.body.id) {
       ResponseHandler.send400(
         response,
-        { message: 'Role ID Not Allowed Allowed' }
+        { message: 'Role ID Not Allowed' }
       );
     } else {
       next();

@@ -5,14 +5,14 @@ import jwtDecode from 'jwt-decode';
 import validateInput from '../validations/signup';
 import { editProfile } from '../actions/editProfile';
 /**
- * @class EditModal
+ * @class EditProfile
  * @extends {Component}
  */
-class EditModal extends Component {
+class EditProfile extends Component {
   /**
-   * Creates an instance of EditModal.
+   * Creates an instance of EditProfile.
    * @param {any} props - props
-   * @memberOf EditModal
+   * @memberOf EditProfile
    */
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ class EditModal extends Component {
   /**
    * @param {any} event - event
    * @returns {void}
-   * @memberOf EditModal
+   * @memberOf EditProfile
    */
   onChange(event) {
     if (this.state.errors[event.target.name]) {
@@ -51,7 +51,7 @@ class EditModal extends Component {
   /**
    * @param {any} event - event
    * @returns {void}
-   * @memberOf EditModal
+   * @memberOf EditProfile
    */
   onSubmit(event) {
     event.preventDefault();
@@ -66,7 +66,7 @@ class EditModal extends Component {
           email: user.email
         });
         Materialize.toast('User Updated', 4000, 'green');
-        $('#editModal').modal('close');
+        $('#EditProfile').modal('close');
       }).catch(() => {
         Materialize.toast('Oops! Something went wrong', 4000, 'red');
       });
@@ -75,7 +75,7 @@ class EditModal extends Component {
 
   /**
  * @returns {Boolean} - True if valid. False Otherwise
- * @memberOf EditModal
+ * @memberOf EditProfile
  */
   isValid() {
     const { errors, isValid } = validateInput(this.state);
@@ -89,97 +89,92 @@ class EditModal extends Component {
 
   /**
    * @returns {jsx} - Edit Modal
-   * @memberOf EditModal
+   * @memberOf EditProfile
    */
   render() {
     const { errors, email, password, firstName, lastName } = this.state;
     return (
-      <div id="editModal" className="modal">
-        <div className="modal-content">
-          <h5>Edit Profile</h5>
-          <form>
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  id="firstName"
-                  type="text"
-                  className="validate firstName"
-                  name="firstName"
-                  value={firstName}
-                  onChange={this.onChange}
-                />
-                <label className="active" htmlFor="firstName">First Name</label>
-                {errors.firstName &&
-                  <span className="errorMsg">{errors.firstName}</span>}
-              </div>
+      <div className="profile">
+        <h5 className="center-align"><b>Edit Profile</b></h5>
+        <form className="profileForm">
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+                id="firstName"
+                type="text"
+                className="validate firstName"
+                name="firstName"
+                value={firstName}
+                onChange={this.onChange}
+              />
+              <label className="active" htmlFor="firstName">First Name</label>
+              {errors.firstName &&
+                <span className="errorMsg">{errors.firstName}</span>}
             </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  id="lastName"
-                  type="text"
-                  className="validate"
-                  name="lastName"
-                  value={lastName}
-                  onChange={this.onChange}
-                />
-                <label className="active" htmlFor="lastName">Last Name</label>
-                {errors.lastName &&
-                  <span className="errorMsg">{errors.lastName}</span>}
-              </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+                id="lastName"
+                type="text"
+                className="validate"
+                name="lastName"
+                value={lastName}
+                onChange={this.onChange}
+              />
+              <label className="active" htmlFor="lastName">Last Name</label>
+              {errors.lastName &&
+                <span className="errorMsg">{errors.lastName}</span>}
             </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  id="email"
-                  type="email"
-                  className="validate"
-                  name="email"
-                  value={email}
-                  onChange={this.onChange}
-                />
-                <label className="active" htmlFor="email">Email</label>
-                {errors.email &&
-                  <span className="errorMsg">{errors.email}</span>}
-              </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+                id="email"
+                type="email"
+                className="validate"
+                name="email"
+                value={email}
+                onChange={this.onChange}
+              />
+              <label className="active" htmlFor="email">Email</label>
+              {errors.email &&
+                <span className="errorMsg">{errors.email}</span>}
             </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input
-                  id="password"
-                  type="password"
-                  className="validate"
-                  name="password"
-                  value={password}
-                  onChange={this.onChange}
-                />
-                <label className="active" htmlFor="password">Password</label>
-                {errors.password &&
-                  <span className="errorMsg">{errors.password}</span>}
-              </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s10">
+              <input
+                id="password"
+                type="password"
+                className="validate"
+                name="password"
+                value={password}
+                onChange={this.onChange}
+              />
+              <label className="active" htmlFor="password">Password</label>
+              {errors.password &&
+                <span className="errorMsg">{errors.password}</span>}
             </div>
-            <div className="row">
-              <div className="modal-footer">
-                <a
-                  className="modal-action modal-close waves-effect waves-green btn-flat" //eslint-disable-line
-                >Cancel</a>
-                <input
-                  id="edit-profile-btn"
-                  type="submit"
-                  className="edit-profile-btn modal-action waves-effect waves-green btn-flat" //eslint-disable-line
-                  value="Submit"
-                  onClick={this.onSubmit}
-                />
-              </div>
+          </div>
+          <div className="row">
+            <div className="modal-footer">
+              <input
+                id="edit-profile-btn"
+                type="submit"
+                className="btn waves-effect waves-light offset-s2 col s8 blue darken-3" //eslint-disable-line
+                value="Submit"
+                onClick={this.onSubmit}
+              />
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     );
   }
 }
 
-EditModal.propTypes = {
+EditProfile.propTypes = {
   editProfile: React.PropTypes.func.isRequired
 };
 
@@ -192,4 +187,4 @@ function mapStateToProps(state) {
     user: state.auth
   };
 }
-export default connect(mapStateToProps, { editProfile })(EditModal);
+export default connect(mapStateToProps, { editProfile })(EditProfile);

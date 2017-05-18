@@ -7,7 +7,7 @@ import { shallow } from 'enzyme';
 import Home from '../../public/js/components/Home';
 
 describe('<Home />', () => {
-  it.only('should display an image', () => {
+  it('should display an image', () => {
     const wrapper = shallow(<Home />);
     expect(wrapper.find('#banner')).to.have.length(1);
   });

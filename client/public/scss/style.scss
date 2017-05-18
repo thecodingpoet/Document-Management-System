@@ -38,6 +38,16 @@
 .card {
 	cursor: pointer;
 	color: blue;
+	word-wrap: break-word;
+}
+
+.profile {
+	padding-top: 20px;
+	padding-left: 70px;
+}
+
+.profileForm {
+	margin-left: 100px;
 }
 
 #topbarsearch .input-field .prefix { 

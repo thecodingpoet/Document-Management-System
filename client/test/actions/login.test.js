@@ -17,7 +17,8 @@ describe('Login Action', () => {
       nock('http://localhost.com/')
         .post('/users/login', user)
         .reply(200, {
-          body: { token: 'fdsffsfsdfsd', user: { email: 'tomi@andela.com', firstName: '' } } });
+          body: { token: 'fdsffsfsdfsd',
+            user: { email: 'tomi@andela.com', firstName: '' } } });
 
       const expectedActions = [{ type: actions.LOGIN_USER,
         user: { email: 'tomi@andela.com', firstName: '' } }];

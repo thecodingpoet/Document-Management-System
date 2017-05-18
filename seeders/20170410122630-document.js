@@ -2,8 +2,11 @@ module.exports = {
   up(queryInterface) {
     return queryInterface.bulkInsert('Documents', [
       {
-        title: 'Document 1',
-        content: 'Lord of the rings',
+        title: 'Lord of the rings',
+        content: `Its a dangerous business, 
+          Frodo, going out your door…You step into the Road,
+          and if you don’t keep your feet, there is no
+          knowing where you might be swept off to.`,
         ownerId: 1,
         ownerRoleId: 1,
         access: 'private',
@@ -11,8 +14,9 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        title: 'Document 2',
-        content: 'Alice in the wonderland',
+        title: 'Alice in the wonderland',
+        content: `Alice:How long is forever?
+        White Rabbit:Sometimes, just one second.`,
         ownerId: 2,
         ownerRoleId: 2,
         access: 'role',
@@ -20,8 +24,9 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        title: 'Document 3',
-        content: 'Harry potter and the philosophers stone',
+        title: 'Harry potter',
+        content: `It takes a great deal of bravery to stand up to our enemies,
+         but just as much to stand up to our friends`,
         ownerId: 2,
         ownerRoleId: 2,
         access: 'public',
@@ -29,35 +34,10 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        title: 'Document 4',
-        content: 'Harry potter and the prisoner',
-        ownerId: 2,
-        ownerRoleId: 2,
-        access: 'public',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        title: 'Document 5',
-        content: 'Your time is limited',
-        ownerId: 2,
-        ownerRoleId: 2,
-        access: 'public',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        title: 'Document 6',
-        content: 'Make the best use of your time',
-        ownerId: 2,
-        access: 'public',
-        ownerRoleId: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        title: 'Document 7',
-        content: 'I was created to create',
+        title: 'Game of thrones',
+        content: `Let me give you some advice, bastard.
+         Never forget what you are. The rest of the world will not. 
+         Wear it like armor, and it can never be used to hurt you`,
         ownerId: 2,
         ownerRoleId: 2,
         access: 'public',

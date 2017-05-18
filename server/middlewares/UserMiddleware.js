@@ -26,7 +26,7 @@ export default class UserMiddleware {
     } else if (request.body.id) {
       ResponseHandler.send400(
         response,
-        { message: 'User ID Not Allowed Allowed' }
+        { message: 'User ID Not Allowed' }
       );
     } else {
       next();

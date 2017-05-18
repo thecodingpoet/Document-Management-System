@@ -1,5 +1,4 @@
 [![Build Status](https://semaphoreci.com/api/v1/thecodingpoet/document-management-system-6/branches/chore-142496267-integrate-houndci/shields_badge.svg)](https://semaphoreci.com/thecodingpoet/document-management-system-6) [![Coverage Status](https://coveralls.io/repos/github/andela-oduyile/Document-Management-System/badge.svg)](https://coveralls.io/github/andela-oduyile/Document-Management-System) [![Code Climate](https://codeclimate.com/github/andela-oduyile/Document-Management-System/badges/gpa.svg)](https://codeclimate.com/github/andela-oduyile/Document-Management-System)
-# Document-Management-System
 
 # Document-Management-System
 
@@ -111,6 +110,12 @@ It should be noted that the endpoints for roles here are only available to the A
 4. Commit your changes: git commit -m "did something"
 5. Push to the remote branch: git push origin new-feature
 6. Open a pull request.
+
+#### Limitations
+---
+
+1. User cannot upload profile pictures
+2. Only text documents is supported
 
 #### Licence
 MIT

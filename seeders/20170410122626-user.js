@@ -4,16 +4,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 module.exports = {
   up(queryInterface) {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-      Example:
-      return queryInterface.bulkInsert('Person', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-
     return queryInterface.bulkInsert('Users', [
       {
         email: process.env.ADMIN_EMAIL,
@@ -49,12 +39,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
     queryInterface.bulkDelete('Users', null, {});
   }
 };

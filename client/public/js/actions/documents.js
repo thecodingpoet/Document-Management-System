@@ -55,9 +55,7 @@ export function createDoc(doc) {
       }
     }).then((res) => {
       dispatch(newDoc(res.data));
-    }).catch(() => {
-      return false;
-    });
+    }).catch(() => false);
   };
 }
 
@@ -69,17 +67,18 @@ export function createDoc(doc) {
  * @returns {Object} - An object that consist of the type
  * of the document and the action
  */
-export function editDoc(doc, docId) { return (dispatch) => {
-  const token = window.localStorage.getItem('token');
-  return axios.put(`/documents/${docId}`, doc, {
-    headers: {
-      authorization: token
-    }
-  }).then((documents) => {
-    dispatch(editDocSuccess(documents.data.documents));
-    Materialize.toast('Document Edited Successfully', 4000, 'green');
-  });
-};
+export function editDoc(doc, docId) {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    return axios.put(`/documents/${docId}`, doc, {
+      headers: {
+        authorization: token
+      }
+    }).then((documents) => {
+      dispatch(editDocSuccess(documents.data.documents));
+      Materialize.toast('Document Edited Successfully', 4000, 'green');
+    });
+  };
 }
 
 

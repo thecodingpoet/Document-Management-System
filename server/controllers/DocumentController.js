@@ -181,8 +181,8 @@ class DocumentController {
    */
   static fetchDocuments(request, response) {
     const search = request.query.search;
-    const limit = request.query.limit || 10;
-    const offset = request.query.offset || 0;
+    const limit = request.query.limit || '10';
+    const offset = request.query.offset || '0';
     const page = request.query.page;
     const requesterRoleId = request.decoded.roleId;
     const requesterId = request.decoded.userId;
@@ -198,12 +198,12 @@ class DocumentController {
     }
     if (page) {
       // override offset if a page is specified, and default limit is 10
-      const pageLimit = limit || 10;
+      const pageLimit = limit;
       queryBuilder.offset = (page * pageLimit) - pageLimit;
       queryBuilder.limit = pageLimit;
     } else {
-      queryBuilder.offset = 0;
-      queryBuilder.limit = 10;
+      queryBuilder.offset = '0';
+      queryBuilder.limit = '10';
     }
     if (search) {
       const searchList = search.split(/\s+/);

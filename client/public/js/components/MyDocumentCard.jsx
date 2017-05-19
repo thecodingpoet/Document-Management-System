@@ -70,7 +70,7 @@ class MyDocumentCard extends React.Component {
   confirmDeletion(callback, id) {
     swal({
       title: 'Are you sure?',
-      text: 'Would you like to delete this user?',
+      text: 'Would you like to delete this document?',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
@@ -81,9 +81,9 @@ class MyDocumentCard extends React.Component {
     (deletionConfirmed) => {
       if (deletionConfirmed) {
         callback(id);
-        swal('Deleted!', 'User has been deleted.', 'success');
+        swal('Deleted!', 'Document has been deleted.', 'success');
       } else {
-        swal('Cancelled!', 'User has not been deleted.', 'error');
+        swal('Cancelled!', 'Document has not been deleted.', 'error');
       }
     });
   }

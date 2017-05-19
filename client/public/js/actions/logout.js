@@ -1,11 +1,18 @@
 import actionTypes from './actionTypes';
 
-export const setCurrentUser = user => ({
+export /**
+ * @param {any} user - user
+ * @returns {Object} - Object containing current user and action
+ */
+const setCurrentUser = user => ({
   type: actionTypes.SET_CURRENT_USER,
   user
 });
 
-export const logout = () => (dispatch) => {
+export /**
+ * @returns {any} - dispatch logout action
+ */
+const logout = () => (dispatch) => {
   localStorage.removeItem('token');
   dispatch(setCurrentUser({}));
 };

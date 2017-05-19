@@ -2,23 +2,11 @@
 /* global shallow:true */
 /* global mount:true */
 
-import React from 'react';//eslint-disable-line
-import { shallow, mount } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 import PrivateDocList from '../../public/js/components/PrivateDocsList';
 
 describe('<PrivateDocList />', () => {
-  const props = {
-      docs: [
-          { id: 3, title: 'new', content: 'six', ownerId: 4 },
-          { id: 4, title: 'new1', content: 'sev', ownerId: 4 },
-          { id: 5, title: 'new2', content: 'eig', ownerId: 4 }
-      ]
-  }
-  it('should have a box', () => {
-    const wrapper = mount(<PrivateDocList {...props} />);
-    expect(wrapper.find('.docList')).to.have.length(1);
-  });
-
   it('should render the empty message paragraph if no document', () => {
     const wrapper = shallow(
       <PrivateDocList docs={[]} />
@@ -35,4 +23,3 @@ describe('<PrivateDocList />', () => {
   });
 });
 
-//here are no Private Documents yet

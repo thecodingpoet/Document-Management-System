@@ -2,6 +2,7 @@ import database from '../models';
 import ErrorHandler from '../helpers/ErrorHandler';
 import ResponseHandler from '../helpers/ResponseHandler';
 import Authenticator from '../middlewares/Authenticator';
+import PaginationHelper from '../helpers/PaginationHelper';
 
 const documentDb = database.Document;
 
@@ -180,8 +181,8 @@ class DocumentController {
    */
   static fetchDocuments(request, response) {
     const search = request.query.search;
-    const limit = request.query.limit;
-    const offset = request.query.offset;
+    const limit = request.query.limit || 10;
+    const offset = request.query.offset || 0;
     const page = request.query.page;
     const requesterRoleId = request.decoded.roleId;
     const requesterId = request.decoded.userId;
@@ -200,6 +201,9 @@ class DocumentController {
       const pageLimit = limit || 10;
       queryBuilder.offset = (page * pageLimit) - pageLimit;
       queryBuilder.limit = pageLimit;
+    } else {
+      queryBuilder.offset = 0;
+      queryBuilder.limit = 10;
     }
     if (search) {
       const searchList = search.split(/\s+/);
@@ -242,12 +246,16 @@ class DocumentController {
     documentDb.findAndCountAll(queryBuilder)
     .then((fetchedDocuments) => {
       if (fetchedDocuments.rows.length > 0) {
+        const pagination = PaginationHelper
+        .paginateResult(
+          fetchedDocuments, queryBuilder.offset, queryBuilder.limit)
+        ;
         ResponseHandler.sendResponse(
           response,
           200,
           {
             documents: fetchedDocuments.rows,
-            total: fetchedDocuments.count
+            pagination,
           }
         );
       } else {

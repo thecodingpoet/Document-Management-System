@@ -2,6 +2,7 @@ import database from '../models';
 import ResponseHandler from '../helpers/ResponseHandler';
 import Authenticator from '../middlewares/Authenticator';
 import ErrorHandler from '../helpers/ErrorHandler';
+import PaginationHelper from '../helpers/PaginationHelper';
 
 const userDB = database.User;
 
@@ -176,11 +177,12 @@ class UserController {
    */
   static fetchUsers(request, response) {
     const search = request.query.search;
-    const limit = request.query.limit || '10';
-    const offset = request.query.offset;
+    const limit = request.query.limit || 10;
+    const offset = request.query.offset || 0;
     const page = request.query.page;
     const queryBuilder = {
       limit,
+      offset,
       order: '"createdAt" DESC'
     };
     if (offset) {
@@ -203,14 +205,15 @@ class UserController {
     userDB.findAndCountAll(queryBuilder)
     .then((users) => {
       if (users.rows.length > 0) {
+        const pagination = PaginationHelper
+      .paginateResult(users, queryBuilder.offset, queryBuilder.limit);
         ResponseHandler.sendResponse(
           response,
           200,
           {
             users: users.rows
               .map(user => UserController.getUserFields(user)),
-            total: users.count,
-            pages: Math.ceil(users.count / limit)
+            pagination,
           }
         );
       } else {

@@ -68,7 +68,8 @@ class EditProfile extends Component {
           email: user.email,
           shouldRedirect: true
         });
-        Materialize.toast('User Updated', 4000, 'green');
+        Materialize.toast(`Updated successfuly. 
+        Your changes will be reflected when next you login`, 4000, 'green');
         $('#EditProfile').modal('close');
       }).catch(() => {
         Materialize.toast('Oops! Something went wrong', 4000, 'red');

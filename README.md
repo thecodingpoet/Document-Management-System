@@ -115,7 +115,7 @@ It should be noted that the endpoints for roles here are only available to the A
 ---
 
 1. User cannot upload profile pictures
-2. Only text documents is supported
+2. Only plain text is supported
 
 #### Licence
 MIT

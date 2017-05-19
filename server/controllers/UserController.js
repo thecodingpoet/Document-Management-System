@@ -46,14 +46,10 @@ class UserController {
       const token = Authenticator.generateToken(user);
       Authenticator.setUserActiveToken(user, token)
       .then(() => {
-        ResponseHandler.sendResponse(
-          response,
-          201,
-          Object.assign(
-            {},
-            UserController.getUserFields(user, token),
-            { roleId: user.roleId }
-          )
+        response.status(200).json({
+          message: 'You have successfully signed up',
+          token
+        }
         );
       });
     })
@@ -177,8 +173,8 @@ class UserController {
    */
   static fetchUsers(request, response) {
     const search = request.query.search;
-    const limit = request.query.limit || 10;
-    const offset = request.query.offset || 0;
+    const limit = request.query.limit || '10';
+    const offset = request.query.offset || '0';
     const page = request.query.page;
     const queryBuilder = {
       limit,
@@ -244,12 +240,7 @@ class UserController {
             .then(() => {
               // send the token here
               response.status(200).json({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                roleId: user.roleId,
-                id: user.id,
-                createdAt: user.createdAt,
+                message: 'You have successfully logged in',
                 token
               });
             });

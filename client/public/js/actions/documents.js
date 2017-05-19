@@ -3,33 +3,62 @@
 import axios from 'axios';
 import actionTypes from './actionTypes';
 
-export const setCurrentDocument = document => ({
+export /**
+ * This sets current document
+ * @param {any} document - document
+ * @returns {Object} - Object containing action type and document
+ */
+const setCurrentDocument = document => ({
   type: actionTypes.SET_CURRENT_DOCUMENT,
   document
 });
 
-export const viewDocs = documents => ({
+export /**
+ * View documents action
+ * @param {any} documents - documents
+ * @returns {Object} - Object containing action type and document
+ */
+const viewDocs = documents => ({
   type: actionTypes.SET_DOCUMENTS,
   documents
 });
 
-export const newDoc = document => ({
+export /**
+ * This creates new document
+ * @param {any} document - document
+ * @returns {Object} - Object containing action type and document
+ */
+const newDoc = document => ({
   type: actionTypes.CREATE_DOCUMENTS,
   document
 });
 
-export const editDocSuccess = document => ({
+export /**
+ * This creates new document
+ * @param {any} document - document
+ * @returns {Object} - Object containing action type and document
+ */
+const editDocSuccess = document => ({
   type: actionTypes.EDIT_DOCUMENT_SUCCESS,
   document
 });
 
-export const documentDeleted = documentId => ({
+export /**
+ * This creates new document
+ * @param {any} documentId - document
+ * @returns {Object} - Object containing action type and document id
+ */
+const documentDeleted = documentId => ({
   type: actionTypes.DELETE_DOCUMENT_SUCCESS,
   documentId
 });
 
-
-export const fetchAllDocs = () => (dispatch) => {
+export /**
+ * This creates new document
+ * @param {any} documentId - document
+ * @returns {Object} - Object containing action type and document id
+ */
+const fetchAllDocs = () => (dispatch) => {
   const token = window.localStorage.getItem('token');
   return axios.get('/documents', {
     headers: {
@@ -82,7 +111,12 @@ export function editDoc(doc, docId) {
 }
 
 
-export const deleteDoc = docId => (dispatch) => {
+export /**
+ * This method dipatches the delete document action
+ * @param {any} docId - document id
+ * @returns {Object} - Document list without the document with the given id
+ */
+const deleteDoc = docId => (dispatch) => {
   const token = window.localStorage.getItem('token');
   return axios.delete(`/documents/${docId}`, {
     headers: {

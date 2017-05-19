@@ -2,18 +2,34 @@ import axios from 'axios';
 import actionTypes from './actionTypes';
 
 
-export const getAllUsersSuccess = (users, pages) => ({
+export /**
+ * @param {any} users - users
+ * @param {any} pages - pages
+ * @returns {Object} - object containing action type,
+ * users and pages
+ */
+const getAllUsersSuccess = (users, pages) => ({
   type: actionTypes.GET_ALL_USERS,
   users,
   pages
 });
 
-export const userDeleted = id => ({
+export /**
+ * @param {any} id - user id
+ * @returns {Object} - object containing action type
+ * and user id
+ */
+const userDeleted = id => ({
   type: actionTypes.DELETE_USER_SUCCESS,
   id
 });
 
-export const getAllUsers = (offset) => {
+export
+/**
+ * @param {any} offset - users
+ * @returns {any} - dispatches get all users success
+ */
+const getAllUsers = (offset) => {
   if (!offset) {
     offset = 0;
   }
@@ -29,7 +45,12 @@ export const getAllUsers = (offset) => {
   };
 };
 
-export const deleteUser = id => (dispatch) => {
+export
+/**
+ * @param {any} id - user id
+ * @returns {any} - dispatches user deleted success
+ */
+const deleteUser = id => (dispatch) => {
   const token = window.localStorage.getItem('token');
   return axios.delete(`/users/${id}`, {
     headers: {
